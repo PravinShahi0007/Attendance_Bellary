@@ -1,0 +1,945 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19E14C23-C9B1-4FD9-9766-CD61C085707D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Attendance</RootNamespace>
+    <AssemblyName>AttendanceBEL</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>en</TargetCulture>
+    <PublisherName>anand</PublisherName>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>C652FFBDECE63917F2809C057893F402F6D87F83</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Attendance_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>if_clock_299080.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.BonusSkins.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v13.1.Core, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Sparkline.v13.1.Core, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v13.1, Version=13.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Help_F1F2">
+      <HintPath>..\Help_F1F2.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.zkemkeeper">
+      <HintPath>..\Interop.zkemkeeper.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MQTTnet, Version=2.6.0.0, Culture=neutral, PublicKeyToken=909d71c724771999, processorArchitecture=MSIL">
+      <HintPath>packages\MQTTnet.2.6.0\lib\net452\MQTTnet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Quartz, Version=2.6.1.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>packages\Quartz.2.6.1\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\ClassGlobals.cs" />
+    <Compile Include="Classes\ClsEmp.cs" />
+    <Compile Include="Classes\clsMachine.cs" />
+    <Compile Include="Classes\clsProcess.cs" />
+    <Compile Include="Classes\Helper.cs" />
+    <Compile Include="Classes\Scheduler.cs" />
+    <Compile Include="Classes\UNCAccessWithCredentials.cs" />
+    <Compile Include="CustomControls\ctrlEmp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\ctrlEmp.Designer.cs">
+      <DependentUpon>ctrlEmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmAutoMailSender.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAutoMailSender.designer.cs">
+      <DependentUpon>frmAutoMailSender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmAutoMailSubScription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAutoMailSubScription.designer.cs">
+      <DependentUpon>frmAutoMailSubScription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmBulkWOChange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmBulkWOChange.Designer.cs">
+      <DependentUpon>frmBulkWOChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDataDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDataDownload.Designer.cs">
+      <DependentUpon>frmDataDownload.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmHalfDayCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmHalfDayCheck.designer.cs">
+      <DependentUpon>frmHalfDayCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastHolidayOpt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastHolidayOpt.designer.cs">
+      <DependentUpon>frmMastHolidayOpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastStatSec.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastStatSec.designer.cs">
+      <DependentUpon>frmMastStatSec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastUserManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastUserManagement.Designer.cs">
+      <DependentUpon>frmMastUserManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastWrkGrpCopy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastWrkGrpCopy.designer.cs">
+      <DependentUpon>frmMastWrkGrpCopy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMessInOutMachine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMessInOutMachine.Designer.cs">
+      <DependentUpon>frmMessInOutMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastException.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastException.designer.cs">
+      <DependentUpon>frmMastException.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmRulesCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmRulesCheck.designer.cs">
+      <DependentUpon>frmRulesCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmServerStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmServerStatus.Designer.cs">
+      <DependentUpon>frmServerStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmUploadShiftSchedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmUploadShiftSchedule.designer.cs">
+      <DependentUpon>frmUploadShiftSchedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmBulkSanction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmBulkSanction.designer.cs">
+      <DependentUpon>frmBulkSanction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmEmployeeImport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmEmployeeImport.designer.cs">
+      <DependentUpon>frmEmployeeImport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmLunchHalfDaypost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmLunchHalfDaypost.designer.cs">
+      <DependentUpon>frmLunchHalfDaypost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmLeaveBalEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmLeaveBalEntry.designer.cs">
+      <DependentUpon>frmLeaveBalEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmLeaveEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmLeaveEntry.designer.cs">
+      <DependentUpon>frmLeaveEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmSanction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSanction.designer.cs">
+      <DependentUpon>frmSanction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMisConduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMisConduct.designer.cs">
+      <DependentUpon>frmMisConduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpJobProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpJobProfile.designer.cs">
+      <DependentUpon>frmMastEmpJobProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpBasicData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpBasicData.designer.cs">
+      <DependentUpon>frmMastEmpBasicData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpPerInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpPerInfo.Designer.cs">
+      <DependentUpon>frmMastEmpPerInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmOtherConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmOtherConfig.Designer.cs">
+      <DependentUpon>frmOtherConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmProcess.Designer.cs">
+      <DependentUpon>frmProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmUploadLeaveBal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmUploadLeaveBal.designer.cs">
+      <DependentUpon>frmUploadLeaveBal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmUserSpRights.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmUserSpRights.designer.cs">
+      <DependentUpon>frmUserSpRights.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastStat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastStat.designer.cs">
+      <DependentUpon>frmMastStat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmCreateMuster.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCreateMuster.designer.cs">
+      <DependentUpon>frmCreateMuster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmValidityExtend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmValidityExtend.designer.cs">
+      <DependentUpon>frmValidityExtend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmBulkCostCodeUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmBulkCostCodeUpdate.designer.cs">
+      <DependentUpon>frmBulkCostCodeUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCodeSanManPower.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCodeSanManPower.designer.cs">
+      <DependentUpon>frmMastCostCodeSanManPower.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCodeEmp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCodeEmp.designer.cs">
+      <DependentUpon>frmMastCostCodeEmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCodeProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCodeProcess.designer.cs">
+      <DependentUpon>frmMastCostCodeProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastComp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastComp.designer.cs">
+      <DependentUpon>frmMastComp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastCont.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastCont.designer.cs">
+      <DependentUpon>frmMastCont.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastHoliday.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastHoliday.designer.cs">
+      <DependentUpon>frmMastHoliday.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastRules.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastRules.designer.cs">
+      <DependentUpon>frmMastRules.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastLeave.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastLeave.designer.cs">
+      <DependentUpon>frmMastLeave.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastShift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastShift.designer.cs">
+      <DependentUpon>frmMastShift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCode.designer.cs">
+      <DependentUpon>frmMastCostCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmReaderConfigMess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmReaderConfigMess.designer.cs">
+      <DependentUpon>frmReaderConfigMess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastMessTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastMessTime.designer.cs">
+      <DependentUpon>frmMastMessTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastMessRate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastMessRate.designer.cs">
+      <DependentUpon>frmMastMessRate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastMessFood.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastMessFood.designer.cs">
+      <DependentUpon>frmMastMessFood.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastMessGrp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastMessGrp.designer.cs">
+      <DependentUpon>frmMastMessGrp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastMess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastMess.designer.cs">
+      <DependentUpon>frmMastMess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpType.designer.cs">
+      <DependentUpon>frmMastEmpType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastGrade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastGrade.designer.cs">
+      <DependentUpon>frmMastGrade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastDesg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastDesg.designer.cs">
+      <DependentUpon>frmMastDesg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastDept.designer.cs">
+      <DependentUpon>frmMastDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastCat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastCat.designer.cs">
+      <DependentUpon>frmMastCat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastUnit.designer.cs">
+      <DependentUpon>frmMastUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmReaderConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmReaderConfig.designer.cs">
+      <DependentUpon>frmReaderConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastWrkGrp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastWrkGrp.designer.cs">
+      <DependentUpon>frmMastWrkGrp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDomainConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDomainConfig.designer.cs">
+      <DependentUpon>frmDomainConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmChangePass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmChangePass.designer.cs">
+      <DependentUpon>frmChangePass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmConnection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmConnection.designer.cs">
+      <DependentUpon>FrmConnection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmLogin.designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmUserRights.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmUserRights.designer.cs">
+      <DependentUpon>frmUserRights.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\MailAttachment.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web References\RE2005\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\RS2005\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CustomControls\ctrlEmp.resx">
+      <DependentUpon>ctrlEmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAutoMailSender.resx">
+      <DependentUpon>frmAutoMailSender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAutoMailSubScription.resx">
+      <DependentUpon>frmAutoMailSubScription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmBulkWOChange.resx">
+      <DependentUpon>frmBulkWOChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDataDownload.resx">
+      <DependentUpon>frmDataDownload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmHalfDayCheck.resx">
+      <DependentUpon>frmHalfDayCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastHolidayOpt.resx">
+      <DependentUpon>frmMastHolidayOpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastStatSec.resx">
+      <DependentUpon>frmMastStatSec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastUserManagement.resx">
+      <DependentUpon>frmMastUserManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastWrkGrpCopy.resx">
+      <DependentUpon>frmMastWrkGrpCopy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMessInOutMachine.resx">
+      <DependentUpon>frmMessInOutMachine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastException.resx">
+      <DependentUpon>frmMastException.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmRulesCheck.resx">
+      <DependentUpon>frmRulesCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmServerStatus.resx">
+      <DependentUpon>frmServerStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmUploadShiftSchedule.resx">
+      <DependentUpon>frmUploadShiftSchedule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmBulkSanction.resx">
+      <DependentUpon>frmBulkSanction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmEmployeeImport.resx">
+      <DependentUpon>frmEmployeeImport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmLunchHalfDaypost.resx">
+      <DependentUpon>frmLunchHalfDaypost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmLeaveBalEntry.resx">
+      <DependentUpon>frmLeaveBalEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmLeaveEntry.resx">
+      <DependentUpon>frmLeaveEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSanction.resx">
+      <DependentUpon>frmSanction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMisConduct.resx">
+      <DependentUpon>frmMisConduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastEmpJobProfile.resx">
+      <DependentUpon>frmMastEmpJobProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastEmpBasicData.resx">
+      <DependentUpon>frmMastEmpBasicData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastEmpPerInfo.resx">
+      <DependentUpon>frmMastEmpPerInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmOtherConfig.resx">
+      <DependentUpon>frmOtherConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmProcess.resx">
+      <DependentUpon>frmProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmUploadLeaveBal.resx">
+      <DependentUpon>frmUploadLeaveBal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmUserSpRights.resx">
+      <DependentUpon>frmUserSpRights.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastStat.resx">
+      <DependentUpon>frmMastStat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCreateMuster.resx">
+      <DependentUpon>frmCreateMuster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmValidityExtend.resx">
+      <DependentUpon>frmValidityExtend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmBulkCostCodeUpdate.resx">
+      <DependentUpon>frmBulkCostCodeUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastCostCodeSanManPower.resx">
+      <DependentUpon>frmMastCostCodeSanManPower.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastCostCodeEmp.resx">
+      <DependentUpon>frmMastCostCodeEmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastCostCodeProcess.resx">
+      <DependentUpon>frmMastCostCodeProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastComp.resx">
+      <DependentUpon>frmMastComp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastCont.resx">
+      <DependentUpon>frmMastCont.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastHoliday.resx">
+      <DependentUpon>frmMastHoliday.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastRules.resx">
+      <DependentUpon>frmMastRules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastLeave.resx">
+      <DependentUpon>frmMastLeave.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastShift.resx">
+      <DependentUpon>frmMastShift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastCostCode.resx">
+      <DependentUpon>frmMastCostCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmReaderConfigMess.resx">
+      <DependentUpon>frmReaderConfigMess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastMessTime.resx">
+      <DependentUpon>frmMastMessTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastMessRate.resx">
+      <DependentUpon>frmMastMessRate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastMessFood.resx">
+      <DependentUpon>frmMastMessFood.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastMessGrp.resx">
+      <DependentUpon>frmMastMessGrp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastMess.resx">
+      <DependentUpon>frmMastMess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastEmpType.resx">
+      <DependentUpon>frmMastEmpType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastGrade.resx">
+      <DependentUpon>frmMastGrade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastDesg.resx">
+      <DependentUpon>frmMastDesg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastDept.resx">
+      <DependentUpon>frmMastDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastCat.resx">
+      <DependentUpon>frmMastCat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastUnit.resx">
+      <DependentUpon>frmMastUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmReaderConfig.resx">
+      <DependentUpon>frmReaderConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastWrkGrp.resx">
+      <DependentUpon>frmMastWrkGrp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDomainConfig.resx">
+      <DependentUpon>frmDomainConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmChangePass.resx">
+      <DependentUpon>frmChangePass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmConnection.resx">
+      <DependentUpon>FrmConnection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmUserRights.resx">
+      <DependentUpon>frmUserRights.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Attendance_TemporaryKey.pfx" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Web References\RE2005\DocumentMapNode.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RE2005\ExecutionInfo.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RE2005\ExecutionInfo2.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RE2005\Extension.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RE2005\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RE2005\ReportExecution2005.wsdl" />
+    <None Include="Web References\RE2005\Warning.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ActiveState.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\CacheRefreshPlan.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\CacheRefreshPlanState.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\CatalogItem.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataRetrievalPlan.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataSetDefinition.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataSource.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataSourceDefinition.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\DataSourcePrompt.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Event.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ExpirationDefinition.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Extension.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ExtensionParameter.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ExtensionSettings.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ItemHistorySnapshot.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ItemParameter.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ItemReferenceData.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Job.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ModelCatalogItem.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ModelDrillthroughReport.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ModelItem.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ParameterValue.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ParameterValueOrFieldReference.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Policy.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Property.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RS2005\ReportService2010.wsdl" />
+    <None Include="Web References\RS2005\Role.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Schedule.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\ScheduleDefinitionOrReference.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Subscription.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Task.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RS2005\Warning.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://172.16.12.47/reportserver/ReportExecution2005.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RE2005\</RelPath>
+      <UpdateFromURL>http://172.16.12.47/reportserver/ReportExecution2005.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Attendance_RE2005_ReportExecutionService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://172.16.12.47/ReportServer/ReportService2010.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RS2005\</RelPath>
+      <UpdateFromURL>http://172.16.12.47/ReportServer/ReportService2010.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Attendance_RS2005_ReportingService2010</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="if_clock_299080.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
