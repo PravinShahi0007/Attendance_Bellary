@@ -568,7 +568,7 @@ namespace Attendance.Forms
                       " SanID,tDate,ConsInTime,ConsOutTime,ConsOverTime,ConsShift,SchLeave,AddID,AddDT,Remarks " +
                       " From MastLeaveSchedule " +
                       " Where EmpUnqId ='" + Emp.EmpUnqID + "' And tDate >= '" + FromDt + "'" +
-                      " And isnull(SchLeave,'') = '' Order By SanID Desc ";
+                      " And (ConsInTime is not null OR ConsOutTime is not null OR ConsOverTime is not null Or ConsShift is not null) Order By SanID Desc ";
 
             SqlPunch = "Select Top 100 " +
                       " PunchDate,IOFLG,MachineIP,AddDt,AddID " +
@@ -1300,7 +1300,7 @@ namespace Attendance.Forms
                             try
                             {
                                 cn.Open();
-                                string sql = "Delete From MastLeaveSchedule where SanID = '" + sanid.ToString() + "'";
+                                
 
                                 string celldate = gv_Sanction.GetRowCellValue(i, "tDate").ToString();
                                 DateTime tempdt = new DateTime(), sFromDt = new DateTime(), sToDate = new DateTime();
@@ -1312,10 +1312,14 @@ namespace Attendance.Forms
                                     sToDate = tempdt.AddDays(1);
 
                                 }
-
+                                string sql = "Delete From MastLeaveSchedule where SanID = '" + sanid.ToString() + "' and SchLeave is null and SchShift is null ";
                                 SqlCommand cmd = new SqlCommand(sql, cn);
-
                                 cmd.ExecuteNonQuery();
+
+                                sql = "Update MastLeaveSchedule set ConsInTime = null , ConsOutTime = null , ConsShift = null, ConsOverTime = null where SanID = '" + sanid.ToString() + "' ";
+                                cmd = new SqlCommand(sql, cn);
+                                cmd.ExecuteNonQuery();
+
 
                                 if (sFromDt != DateTime.MinValue && sToDate != DateTime.MinValue)
                                 {

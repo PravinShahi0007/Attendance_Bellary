@@ -909,12 +909,26 @@ namespace Attendance.Forms
                             try
                             {
 
-                                string sqldel = "Delete From MastLeaveSchedule where " +
-                                " EmpUnqID='" + Emp.EmpUnqID + "'" +
-                                " And tDate ='" + CalDt.ToString("yyyy-MM-dd") + "' and schLeave is not null";
+                               
+                                string sqldel = "Delete From MastLeaveSchedule Where " +
+                                " EmpUnqID='" + Emp.EmpUnqID + "' " +
+                                " And tDate ='" + CalDt.ToString("yyyy-MM-dd") + "'" +
+                                " And SchLeave='" + LeaveTyp + "' and WrkGrp ='" + Emp.WrkGrp + "' AND  ConsInTime is null and ConsOutTime is null " +
+                                " And ConsOverTime is null and ConsShift is null ";
 
-                                SqlCommand cmd = new SqlCommand(sql, cn, tr);
+                                SqlCommand cmd = new SqlCommand(sqldel, cn, tr);
                                 int t = (int)cmd.ExecuteNonQuery();
+
+                                sqldel = "Update MastLeaveSchedule Set SchLeave = null, SchLeaveHalf = 0,SchLeaveAdv = 0 Where " +
+                                " EmpUnqID='" + Emp.EmpUnqID + "' " +
+                                " And tDate ='" + CalDt.ToString("yyyy-MM-dd") +"'" +
+                                " And SchLeave='" + LeaveTyp + "' and WrkGrp ='" + Emp.WrkGrp + "' ";
+
+                                SqlCommand cmd2 = new SqlCommand(sqldel, cn, tr);
+                                t = (int)cmd2.ExecuteNonQuery();
+
+
+                                
                                 
                             }
                             catch (Exception ex)
@@ -1188,11 +1202,20 @@ namespace Attendance.Forms
                             string tsql = "Delete From MastLeaveSchedule Where " +
                              " EmpUnqID='" + Emp.EmpUnqID + "' " +
                              " And tDate Between '" + FromDt.ToString("yyyy-MM-dd") + "' And '" + ToDt.ToString("yyyy-MM-dd") + "'" +
-                             " And SchLeave='" + LeaveTyp + "' and WrkGrp ='" + Emp.WrkGrp + "' ";
+                             " And SchLeave='" + LeaveTyp + "' and WrkGrp ='" + Emp.WrkGrp + "' AND  ConsInTime is null and ConsOutTime is null " +
+                             " And ConsOverTime is null and ConsShift is null ";
 
                             SqlCommand cmd = new SqlCommand(tsql, cn, tr);
                             cmd.ExecuteNonQuery();
 
+                            tsql = "Update MastLeaveSchedule Set SchLeave = null, SchLeaveHalf = 0,SchLeaveAdv = 0 Where " +
+                            " EmpUnqID='" + Emp.EmpUnqID + "' " +
+                            " And tDate Between '" + FromDt.ToString("yyyy-MM-dd") + "' And '" + ToDt.ToString("yyyy-MM-dd") + "'" +
+                            " And SchLeave='" + LeaveTyp + "' and WrkGrp ='" + Emp.WrkGrp + "' ";
+
+                            SqlCommand cmd2 = new SqlCommand(tsql, cn, tr);
+                            cmd2.ExecuteNonQuery();
+                            
                             tsql = "Update LeaveBal " +
                             " Set Avl = Avl-" + r["LeaveDed"].ToString() + "," +
                             "     Adv = Adv-" + r["LeaveADV"].ToString() + " " +
@@ -1408,17 +1431,31 @@ namespace Attendance.Forms
 
                 string sanid = string.Empty;
                 DateTime tDate = new DateTime() ;
-
+                string leavtyp = string.Empty;
                 foreach (int i in gv_Sanction.GetSelectedRows())
                 {
                     sanid = gv_Sanction.GetRowCellValue(i, "SanID").ToString();
                     tDate = Convert.ToDateTime(gv_Sanction.GetRowCellValue(i, "tDate").ToString());
+                    leavtyp = gv_Sanction.GetRowCellValue(i, "SchLeave").ToString().Trim();
 
-                    string sql = "Delete From MastLeaveSchedule where SanID = '" + sanid + "'";
+                    //string sql = "Delete From MastLeaveSchedule where SanID = '" + sanid + "'";
                     try
                     {
-                        SqlCommand cmd = new SqlCommand(sql, cn, tr);
+                        string sql = "Delete From MastLeaveSchedule where SanID = '" + sanid.ToString() + "' and SchLeave is not null " +
+                            " and ConsInTime is not null  and ConsOutTime is not null " +
+                            " and ConsShift is not null and ConsOverTime is not null " +
+                            " and ConsShift is not null and SchShift is not null and SchLeave ='" + leavtyp + "'" ;
+                                
+                                        
+                        SqlCommand cmd = new SqlCommand(sql, cn,tr);
                         cmd.ExecuteNonQuery();
+
+                        sql = "Update MastLeaveSchedule set SchLeave = null , SchLeaveHalf = 0  where SanID = '" + sanid.ToString() + "' and SchLeave ='" + leavtyp + "'";
+                        SqlCommand cmd2 = new SqlCommand(sql, cn,tr);
+                        cmd2.ExecuteNonQuery();
+
+                        //SqlCommand cmd2 = new SqlCommand(sql, cn, tr);
+                        //cmd2.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
