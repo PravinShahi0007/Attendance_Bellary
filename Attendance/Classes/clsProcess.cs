@@ -2185,6 +2185,58 @@ namespace Attendance
 
                     }
                 }
+                else if (tOTFLG && drAttd["LeaveTyp"].ToString() == "SH")
+                {
+                    TimeSpan t3 = (Convert.ToDateTime(drAttd["ConsOut"]) - ShiftEnd);
+                    OverTime = t3.TotalSeconds;
+                    double othrs = 0, otmin = 0;
+                    double ot = 0;
+
+                    othrs = Math.Truncate(OverTime / 3600);
+                    otmin = Math.Truncate((OverTime - (othrs * 3600)) / 60);
+                    //otmin = ((int)OverTime - (othrs * 60));
+                    ot = othrs;
+
+                    //if (otmin >= 21 && otmin <= 50)
+                    //{
+                    //    ot = othrs + 0.5;
+                    //}
+                    //else 
+
+                    if (otmin > 50 && otmin <= 59)
+                    {
+                        ot = othrs + 1;
+                    }
+
+                    if (ot >= 1)
+                    {
+                        ot = ot - ShiftBreak;
+                    }
+
+                    if (ot >= 1)
+                    {
+                        if (drAttd["Latecome"].ToString() != "")
+                        {
+                            int thr = Convert.ToInt32(drAttd["Latecome"].ToString().Substring(0, 2));
+                            int tmn = Convert.ToInt32(drAttd["Latecome"].ToString().Substring(3, 2));
+
+                            ot = ot - thr;
+                            if (tmn >= 15 && tmn <= 40)
+                                ot = ot - 0.5;
+                            else if (tmn >= 41 && tmn <= 59)
+                                ot = ot - 1;
+
+                        }
+
+                        drAttd["ConsOverTime"] = ot;
+                        drAttd["CalcOvertime"] = ot;
+                    }
+                    else
+                    {
+                        drAttd["ConsOverTime"] = 0;
+                        drAttd["CalcOvertime"] = 0;
+                    }
+                }
                 else
                 {
                     drAttd["ConsOverTime"] = 0;

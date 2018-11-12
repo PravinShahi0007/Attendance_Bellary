@@ -736,7 +736,7 @@ namespace Attendance.Classes
                             
                         }
 
-                        //this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
+                        this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
                     }
                 }
 
@@ -823,7 +823,7 @@ namespace Attendance.Classes
                         }
                     }
                     
-                    //this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
+                    this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
                 }
 
             }
@@ -944,7 +944,7 @@ namespace Attendance.Classes
                                 }
 
                                 //make sure to access method rfid+face
-                                //this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
+                                this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
                                 
                               
                             }

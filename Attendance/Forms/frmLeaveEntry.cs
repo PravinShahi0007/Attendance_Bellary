@@ -1202,8 +1202,8 @@ namespace Attendance.Forms
                             string tsql = "Delete From MastLeaveSchedule Where " +
                              " EmpUnqID='" + Emp.EmpUnqID + "' " +
                              " And tDate Between '" + FromDt.ToString("yyyy-MM-dd") + "' And '" + ToDt.ToString("yyyy-MM-dd") + "'" +
-                             " And SchLeave='" + LeaveTyp + "' and WrkGrp ='" + Emp.WrkGrp + "' AND  ConsInTime is null and ConsOutTime is null " +
-                             " And ConsOverTime is null and ConsShift is null ";
+                             " And SchLeave is not null and WrkGrp ='" + Emp.WrkGrp + "' AND  ConsInTime is null and ConsOutTime is null " +
+                             " And ConsOverTime is null and ConsShift is null and SchShift is null ";
 
                             SqlCommand cmd = new SqlCommand(tsql, cn, tr);
                             cmd.ExecuteNonQuery();
@@ -1211,7 +1211,7 @@ namespace Attendance.Forms
                             tsql = "Update MastLeaveSchedule Set SchLeave = null, SchLeaveHalf = 0,SchLeaveAdv = 0 Where " +
                             " EmpUnqID='" + Emp.EmpUnqID + "' " +
                             " And tDate Between '" + FromDt.ToString("yyyy-MM-dd") + "' And '" + ToDt.ToString("yyyy-MM-dd") + "'" +
-                            " And SchLeave='" + LeaveTyp + "' and WrkGrp ='" + Emp.WrkGrp + "' ";
+                            " And SchLeave is not null and WrkGrp ='" + Emp.WrkGrp + "' ";
 
                             SqlCommand cmd2 = new SqlCommand(tsql, cn, tr);
                             cmd2.ExecuteNonQuery();
@@ -1261,13 +1261,14 @@ namespace Attendance.Forms
 
                         //need to remove all weekoff if there is no sanction of other type.
 
-                        sql = "Delete from MastLeaveSchedule where EmpUnqID ='" + Emp.EmpUnqID + "' " +
+                        sql = "Update MastLeaveSchedule  set SchLeave = null where EmpUnqID ='" + Emp.EmpUnqID + "' " +
                             " and WrkGrp ='" + Emp.WrkGrp + "' and tDate between '" + FromDt.ToString("yyyy-MM-dd") + "' And " +
-                            " '" + ToDt.ToString("yyyy-MM-dd") + "' and SchLeave = 'WO'  and WrkGrp ='" + Emp.WrkGrp + "' " +
-                            " and ConsInTime is null and ConsOutTime is null And ConsOverTime is null And ConsShift is null And SchShift is null ";
+                            " '" + ToDt.ToString("yyyy-MM-dd") + "' and SchLeave = 'WO'  and WrkGrp ='" + Emp.WrkGrp + "' ";
+                          
 
                         cmd1 = new SqlCommand(sql, cn, tr);
                         cmd1.ExecuteNonQuery();
+
 
                     }
                     catch (Exception ex)
@@ -1338,7 +1339,7 @@ namespace Attendance.Forms
                     {
                         sql = " Insert into MastLeaveSchedule " +
                                 " ( EmpUnqID,WrkGrp,tDate,SchLeave,Adddt,AddId )" +
-                                " Values ('" + Emp.EmpUnqID + "','" + Emp.WrkGrp + "','" + tDate.ToString("yyyy-MM-dd") + "','" + r["PublicHLTyp"].ToString() + "','GetDate()','HLCal')";
+                                " Values ('" + Emp.EmpUnqID + "','" + Emp.WrkGrp + "','" + tDate.ToString("yyyy-MM-dd") + "','" + r["PublicHLTyp"].ToString() + "',GetDate(),'HLCal')";
 
                         SqlCommand cmd = new SqlCommand(sql, cn);
                         cmd.ExecuteNonQuery();
