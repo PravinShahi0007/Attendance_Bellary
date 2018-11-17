@@ -986,6 +986,14 @@ namespace Attendance.Forms
                                                        
                         if(WoEntReq == false)
                         {
+                            string sqldel = "Update MastLeaveSchedule Set SchLeave = null, SchLeaveHalf = 0,SchLeaveAdv = 0 Where " +
+                                " EmpUnqID='" + Emp.EmpUnqID + "' " +
+                                " And tDate ='" + CalDt.ToString("yyyy-MM-dd") + "'" +
+                                " And SchLeave in ('WO','HL') and WrkGrp ='" + Emp.WrkGrp + "' ";
+
+                            SqlCommand cmd = new SqlCommand(sqldel, cn, tr);
+                            cmd.ExecuteNonQuery();
+
                             drSch["schLeave"] = LeaveTyp;
                             drSch["AddId"] = Utils.User.GUserID;
                             drSch["AddDt"] = Globals.GetSystemDateTime();
