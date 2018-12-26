@@ -160,7 +160,7 @@ namespace Attendance.Forms
             btnSanction.Enabled = false;
             btnDel_Leave.Enabled = false;
             btnDel_SanLeave.Enabled = false;
-
+            btnReconsile.Enabled = false;
             ResetGrid();
 
         }
@@ -170,7 +170,7 @@ namespace Attendance.Forms
             btnSanction.Enabled = false;
             btnDel_Leave.Enabled = false;
             btnDel_SanLeave.Enabled = false;
-
+            btnReconsile.Enabled = false;
 
             if (GRights.Contains("A"))
             {
@@ -189,6 +189,14 @@ namespace Attendance.Forms
 
                     btnDel_Leave.Enabled = true;
                     btnDel_SanLeave.Enabled = true;
+                }
+            }
+
+            if (GRights.Contains("AUDV"))
+            {
+                if (Globals.GetWrkGrpRights(280, Emp.WrkGrp, Emp.EmpUnqID))
+                {
+                    btnReconsile.Enabled = true;
                 }
             }
                         
@@ -589,7 +597,7 @@ namespace Attendance.Forms
             }
             
             txtTotDays.Value = TotDays;
-            if(txtLeaveTyp.Text.Trim() == "AB" || txtLeaveTyp.Text.Trim() == "LW" || txtLeaveTyp.Text.Trim() == "SP")
+            if(txtLeaveTyp.Text.Trim() == "AB" || txtLeaveTyp.Text.Trim() == "LW" || txtLeaveTyp.Text.Trim() == "SP" || txtLeaveTyp.Text.Trim() == "OH")
             {
                 WODayNo = 0;
                 HLDay = 0;
@@ -784,6 +792,9 @@ namespace Attendance.Forms
                 case "SP" :
                     WoEntReq = false;
                     break;
+                case "OH":
+                    WoEntReq = false;
+                    break;
                 default :
                     WoEntReq = true;
                     break;
@@ -854,6 +865,7 @@ namespace Attendance.Forms
                     catch (Exception ex)
                     {
                         tr.Rollback();
+                        tr.Dispose();
                         MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         Cursor.Current = Cursors.Default;
                         return;
@@ -934,6 +946,7 @@ namespace Attendance.Forms
                             catch (Exception ex)
                             {
                                 tr.Rollback();
+                                tr.Dispose();
                                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Cursor.Current = Cursors.Default;
                                 return;
@@ -961,6 +974,7 @@ namespace Attendance.Forms
                             catch (Exception ex)
                             {
                                 tr.Rollback();
+                                tr.Dispose();
                                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 Cursor.Current = Cursors.Default;
                                 return;
@@ -986,14 +1000,15 @@ namespace Attendance.Forms
                                                        
                         if(WoEntReq == false)
                         {
+
                             string sqldel = "Update MastLeaveSchedule Set SchLeave = null, SchLeaveHalf = 0,SchLeaveAdv = 0 Where " +
                                 " EmpUnqID='" + Emp.EmpUnqID + "' " +
                                 " And tDate ='" + CalDt.ToString("yyyy-MM-dd") + "'" +
                                 " And SchLeave in ('WO','HL') and WrkGrp ='" + Emp.WrkGrp + "' ";
 
-                            SqlCommand cmd = new SqlCommand(sqldel, cn, tr);
-                            cmd.ExecuteNonQuery();
-
+                            SqlCommand cmd2 = new SqlCommand(sqldel, cn, tr);
+                            int t = (int)cmd2.ExecuteNonQuery();
+                            
                             drSch["schLeave"] = LeaveTyp;
                             drSch["AddId"] = Utils.User.GUserID;
                             drSch["AddDt"] = Globals.GetSystemDateTime();
@@ -1060,6 +1075,7 @@ namespace Attendance.Forms
                         catch (Exception ex)
                         {
                             tr.Rollback();
+                            tr.Dispose();
                             MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Cursor.Current = Cursors.Default;
                             return;
@@ -1068,31 +1084,7 @@ namespace Attendance.Forms
                     }//foreach dateloop - trsLV
                     #endregion
 
-                    #region UpdateLeaveBal
-                    try
-                    {
-                        string tsql1 = "Update LeaveBal " +
-                            " Set AVL = AVL + '" + LeaveDays.ToString() + "'" +
-                            " ,ADV = Adv + '" + LeaveADV.ToString() + "'" +
-                            " Where " +
-                            " CompCode ='" + Emp.CompCode + "'" +
-                            " And WrkGrp='" + Emp.WrkGrp + "'" +
-                            " And tYear ='" + FromDt.Year.ToString() + "'" +
-                            " And EmpUnqID ='" + Emp.EmpUnqID + "'" +
-                            " And LeaveTyp='" + LeaveTyp + "'";
-
-                        SqlCommand cmd2 = new SqlCommand(tsql1, cn, tr);
-                        cmd2.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        tr.Rollback();
-                        MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Cursor.Current = Cursors.Default;
-                        return;
-                    }
-
-                    #endregion
+                    
                 }
 
                 
@@ -1100,7 +1092,46 @@ namespace Attendance.Forms
 
                 try
                 {
+
+                    #region UpdateLeaveBal
+
+                    using (SqlCommand cmd20 = new SqlCommand())
+                    {
+                        try
+                        {
+                            string tsql1 = "Update LeaveBal " +
+                                " Set AVL = AVL + '" + LeaveDays.ToString() + "'" +
+                                " ,ADV = Adv + '" + LeaveADV.ToString() + "'" +
+                                " ,UPDDT = GetDate(),UPDID = '" + Utils.User.GUserID + "' " +
+                                " Where " +
+                                " CompCode ='" + Emp.CompCode + "'" +
+                                " And WrkGrp='" + Emp.WrkGrp + "'" +
+                                " And tYear ='" + FromDt.Year.ToString() + "'" +
+                                " And EmpUnqID ='" + Emp.EmpUnqID + "'" +
+                                " And LeaveTyp='" + LeaveTyp + "'";
+
+                            cmd20.CommandType = CommandType.Text;
+                            cmd20.CommandText = tsql1;
+                            cmd20.Connection = cn;
+                            cmd20.Transaction = tr;
+                            cmd20.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            tr.Rollback();
+                            tr.Dispose();
+
+                            MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Cursor.Current = Cursors.Default;
+                            return;
+                        }
+                    }
+                    
+                    #endregion
+
                     tr.Commit();
+
+
                     #region ProcessData
                     clsProcess pro = new clsProcess();
 
@@ -1116,6 +1147,7 @@ namespace Attendance.Forms
                 catch (Exception ex)
                 {
                     tr.Rollback();
+                    tr.Dispose();
                     MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Cursor.Current = Cursors.Default;
                     return;
@@ -1226,7 +1258,8 @@ namespace Attendance.Forms
                             
                             tsql = "Update LeaveBal " +
                             " Set Avl = Avl-" + r["LeaveDed"].ToString() + "," +
-                            "     Adv = Adv-" + r["LeaveADV"].ToString() + " " +
+                            "     Adv = Adv-" + r["LeaveADV"].ToString() + ", " +
+                            " UpdDt=GetDate(), UPDID='" + Utils.User.GUserID + "' " +
                             " Where " +
                             " CompCode='" + Emp.CompCode + "' " +
                             " And WrkGrp='" + Emp.WrkGrp + "' " +
@@ -1318,7 +1351,18 @@ namespace Attendance.Forms
 
                 }
 
-                tr.Commit();
+                try
+                {
+                    tr.Commit();
+                }
+                catch (Exception ex)
+                {
+                    tr.Rollback();
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Cursor.Current = Cursors.Default;
+                    return;
+                }
+               
 
                 #endregion
 
@@ -1536,6 +1580,95 @@ namespace Attendance.Forms
         {
             LoadLeaveDetails();
             LoadGrid();
+        }
+
+        private void btnReconsile_Click(object sender, EventArgs e)
+        {
+            //get all opening leave balance
+            // search in year total leave posted count in attddata
+            // reset avl leave 
+            string err = DataValidate();
+            
+            if(!string.IsNullOrEmpty(err))
+            {
+                MessageBox.Show(err,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
+
+
+            DialogResult drConf = MessageBox.Show("Are you sure to Reconsile Leave Balance  ?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (drConf == DialogResult.No)
+            {
+                return;
+            }
+
+
+            this.Cursor = Cursors.WaitCursor;
+
+            string sql = "Select * from LeaveBal Where tYear= year(GetDate()) and EmpUnqID ='" + ctrlEmp1.txtEmpUnqID.Text.Trim().ToString() + "'";
+
+            //string sql = "Select * from LeaveBal Where tYear= 2018 and CompCode = '01' and WrkGrp = 'Comp' and EmpUnqID in (Select EmpUnqID From MastEmp Where Active = 1 and WrkGrp = 'Comp' and CompCode = '01')";
+            
+            DataSet ds = Utils.Helper.GetData(sql,Utils.Helper.constr);
+            bool hasrow = ds.Tables.Cast<DataTable>().Any(table => table.Rows.Count != 0);
+            if (hasrow)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    
+                    double LeaveHalf = 0;
+                    double LeaveFull = 0;
+                    double LeaveAVL = 0;
+
+                    string sql2 = "Select Count(*) from AttdData Where LeaveTyp ='" + dr["LeaveTyp"].ToString() + "' " +
+                        " And tYear = '" + dr["tYear"].ToString() + "' And EmpUnqID ='" + dr["EmpUnqID"].ToString() + "'" +
+                        " And CompCode = '" + dr["CompCode"].ToString() + "' And WrkGrp ='" + dr["WrkGrp"].ToString() + "' and LeaveHalf = 0";
+
+                    LeaveFull = Convert.ToDouble(Utils.Helper.GetDescription(sql2, Utils.Helper.constr));
+
+                     sql2 = "Select Count(*) from AttdData Where LeaveTyp ='" + dr["LeaveTyp"].ToString() + "' " +
+                        " And tYear = '" + dr["tYear"].ToString() + "' And EmpUnqID ='" + dr["EmpUnqID"].ToString() + "'" +
+                        " And CompCode = '" + dr["CompCode"].ToString() + "' And WrkGrp ='" + dr["WrkGrp"].ToString() + "' and LeaveHalf = 1";
+
+                     LeaveHalf = Convert.ToDouble(Utils.Helper.GetDescription(sql2, Utils.Helper.constr));
+
+                     if (LeaveHalf > 0)
+                     {
+                         LeaveHalf = LeaveHalf / 2;
+                     }
+
+                     LeaveAVL = LeaveFull + LeaveHalf;
+
+                     using (SqlConnection cn = new SqlConnection(Utils.Helper.constr))
+                     {
+                         using (SqlCommand cmd = new SqlCommand())
+                         {
+                             try
+                             {
+                                 cn.Open();
+                                 sql = "Update LeaveBal Set AVL ='" + LeaveAVL.ToString() + "', UpdDt = GetDate(), UpdID ='" + Utils.User.GUserID + "' Where " +
+                                     " EmpUnqID = '" + dr["EmpUnqID"].ToString() + "' and " +
+                                     " tYear ='" + dr["tYear"].ToString() + "' and " +
+                                     " WrkGrp ='" + dr["WrkGrp"].ToString() + "' And " +
+                                     " LeaveTyp='" + dr["LeaveTyp"].ToString() + "' and " +
+                                     " CompCode ='" + dr["CompCode"].ToString() + "'";
+
+                                 cmd.Connection = cn;
+                                 cmd.CommandType = CommandType.Text;
+                                 cmd.CommandText = sql;
+                                 cmd.ExecuteNonQuery();
+                             }
+                             catch (Exception ex)
+                             {
+                                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                             }
+                         }
+                     }
+                    
+                }//foreach
+            }//if
+
+            this.Cursor = Cursors.Default;
         }
 
     }
