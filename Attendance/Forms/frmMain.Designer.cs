@@ -35,6 +35,7 @@
             this.mnuUserRights = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMastComp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCopyWrkGrpToOther = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMastWrkGrp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMastUnit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMessConfig = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,7 +119,6 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.stsUserDesc = new System.Windows.Forms.ToolStripStatusLabel();
             this.stsExtra = new System.Windows.Forms.ToolStripStatusLabel();
-            this.mnuCopyWrkGrpToOther = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -195,63 +195,70 @@
             // mnuMastComp
             // 
             this.mnuMastComp.Name = "mnuMastComp";
-            this.mnuMastComp.Size = new System.Drawing.Size(269, 22);
+            this.mnuMastComp.Size = new System.Drawing.Size(268, 22);
             this.mnuMastComp.Text = "Company Master";
             this.mnuMastComp.Click += new System.EventHandler(this.mnuMastComp_Click);
+            // 
+            // mnuCopyWrkGrpToOther
+            // 
+            this.mnuCopyWrkGrpToOther.Name = "mnuCopyWrkGrpToOther";
+            this.mnuCopyWrkGrpToOther.Size = new System.Drawing.Size(268, 22);
+            this.mnuCopyWrkGrpToOther.Text = "Create WrkGrp ->Copy From Other";
+            this.mnuCopyWrkGrpToOther.Click += new System.EventHandler(this.mnuCopyWrkGrpToOther_Click);
             // 
             // mnuMastWrkGrp
             // 
             this.mnuMastWrkGrp.Name = "mnuMastWrkGrp";
-            this.mnuMastWrkGrp.Size = new System.Drawing.Size(269, 22);
+            this.mnuMastWrkGrp.Size = new System.Drawing.Size(268, 22);
             this.mnuMastWrkGrp.Text = "WrkGrp Master";
             this.mnuMastWrkGrp.Click += new System.EventHandler(this.mnuMastWrkGrp_Click);
             // 
             // mnuMastUnit
             // 
             this.mnuMastUnit.Name = "mnuMastUnit";
-            this.mnuMastUnit.Size = new System.Drawing.Size(269, 22);
+            this.mnuMastUnit.Size = new System.Drawing.Size(268, 22);
             this.mnuMastUnit.Text = "Unit Master";
             this.mnuMastUnit.Click += new System.EventHandler(this.mnuMastUnit_Click);
             // 
             // mnuMessConfig
             // 
             this.mnuMessConfig.Name = "mnuMessConfig";
-            this.mnuMessConfig.Size = new System.Drawing.Size(269, 22);
+            this.mnuMessConfig.Size = new System.Drawing.Size(268, 22);
             this.mnuMessConfig.Text = "Mess Config";
             this.mnuMessConfig.Click += new System.EventHandler(this.mnuMessConfig_Click);
             // 
             // MnuReaderConfig
             // 
             this.MnuReaderConfig.Name = "MnuReaderConfig";
-            this.MnuReaderConfig.Size = new System.Drawing.Size(269, 22);
+            this.MnuReaderConfig.Size = new System.Drawing.Size(268, 22);
             this.MnuReaderConfig.Text = "Reader Config";
             this.MnuReaderConfig.Click += new System.EventHandler(this.MnuReaderConfig_Click);
             // 
             // mnuReaderMessAsign
             // 
             this.mnuReaderMessAsign.Name = "mnuReaderMessAsign";
-            this.mnuReaderMessAsign.Size = new System.Drawing.Size(269, 22);
+            this.mnuReaderMessAsign.Size = new System.Drawing.Size(268, 22);
             this.mnuReaderMessAsign.Text = "Assign Readers to Mess";
             this.mnuReaderMessAsign.Click += new System.EventHandler(this.mnuReaderMessAsign_Click);
             // 
             // mnuMastShift
             // 
             this.mnuMastShift.Name = "mnuMastShift";
-            this.mnuMastShift.Size = new System.Drawing.Size(269, 22);
+            this.mnuMastShift.Size = new System.Drawing.Size(268, 22);
             this.mnuMastShift.Text = "Shift/WrkHrs Config";
             this.mnuMastShift.Click += new System.EventHandler(this.mnuMastShift_Click);
             // 
             // mnuMastLeave
             // 
             this.mnuMastLeave.Name = "mnuMastLeave";
-            this.mnuMastLeave.Size = new System.Drawing.Size(269, 22);
+            this.mnuMastLeave.Size = new System.Drawing.Size(268, 22);
             this.mnuMastLeave.Text = "Leave Type Config";
             this.mnuMastLeave.Click += new System.EventHandler(this.mnuMastLeave_Click);
             // 
             // mnuMessInOutMachine
             // 
             this.mnuMessInOutMachine.Name = "mnuMessInOutMachine";
-            this.mnuMessInOutMachine.Size = new System.Drawing.Size(269, 22);
+            this.mnuMessInOutMachine.Size = new System.Drawing.Size(268, 22);
             this.mnuMessInOutMachine.Text = "Mess In-Out and Time Configuration";
             this.mnuMessInOutMachine.Click += new System.EventHandler(this.mnuMessInOutMachine_Click);
             // 
@@ -406,14 +413,14 @@
             // 
             this.mnuMastHoliday.Name = "mnuMastHoliday";
             this.mnuMastHoliday.Size = new System.Drawing.Size(208, 22);
-            this.mnuMastHoliday.Text = "Holiday Calander";
+            this.mnuMastHoliday.Text = "Holiday Calendar";
             this.mnuMastHoliday.Click += new System.EventHandler(this.mnuMastHoliday_Click);
             // 
             // mnuMastHolidayOpt
             // 
             this.mnuMastHolidayOpt.Name = "mnuMastHolidayOpt";
             this.mnuMastHolidayOpt.Size = new System.Drawing.Size(208, 22);
-            this.mnuMastHolidayOpt.Text = "Optional Holidy Calander";
+            this.mnuMastHolidayOpt.Text = "Optional Holidy Calendar";
             this.mnuMastHolidayOpt.Click += new System.EventHandler(this.mnuMastHolidayOpt_Click);
             // 
             // mnuAutoMail
@@ -514,28 +521,28 @@
             // mnuMastMessGrp
             // 
             this.mnuMastMessGrp.Name = "mnuMastMessGrp";
-            this.mnuMastMessGrp.Size = new System.Drawing.Size(151, 22);
+            this.mnuMastMessGrp.Size = new System.Drawing.Size(150, 22);
             this.mnuMastMessGrp.Text = "Group Master";
             this.mnuMastMessGrp.Click += new System.EventHandler(this.mnuMastMessGrp_Click);
             // 
             // mnuMastFood
             // 
             this.mnuMastFood.Name = "mnuMastFood";
-            this.mnuMastFood.Size = new System.Drawing.Size(151, 22);
+            this.mnuMastFood.Size = new System.Drawing.Size(150, 22);
             this.mnuMastFood.Text = "Food Master";
             this.mnuMastFood.Click += new System.EventHandler(this.mnuMastFood_Click);
             // 
             // mnuMastTime
             // 
             this.mnuMastTime.Name = "mnuMastTime";
-            this.mnuMastTime.Size = new System.Drawing.Size(151, 22);
+            this.mnuMastTime.Size = new System.Drawing.Size(150, 22);
             this.mnuMastTime.Text = "Timing Master";
             this.mnuMastTime.Click += new System.EventHandler(this.mnuMastTime_Click);
             // 
             // mnuMastRate
             // 
             this.mnuMastRate.Name = "mnuMastRate";
-            this.mnuMastRate.Size = new System.Drawing.Size(151, 22);
+            this.mnuMastRate.Size = new System.Drawing.Size(150, 22);
             this.mnuMastRate.Text = "Rate Master";
             this.mnuMastRate.Click += new System.EventHandler(this.mnuMastRate_Click);
             // 
@@ -601,7 +608,7 @@
             this.mnuSanction,
             this.mnuAutoMailSender});
             this.mnuTranS.Name = "mnuTranS";
-            this.mnuTranS.Size = new System.Drawing.Size(80, 20);
+            this.mnuTranS.Size = new System.Drawing.Size(79, 20);
             this.mnuTranS.Text = "&Transaction";
             // 
             // mnuLeave
@@ -839,13 +846,6 @@
             // 
             this.stsExtra.Name = "stsExtra";
             this.stsExtra.Size = new System.Drawing.Size(0, 17);
-            // 
-            // mnuCopyWrkGrpToOther
-            // 
-            this.mnuCopyWrkGrpToOther.Name = "mnuCopyWrkGrpToOther";
-            this.mnuCopyWrkGrpToOther.Size = new System.Drawing.Size(269, 22);
-            this.mnuCopyWrkGrpToOther.Text = "Create WrkGrp ->Copy From Other";
-            this.mnuCopyWrkGrpToOther.Click += new System.EventHandler(this.mnuCopyWrkGrpToOther_Click);
             // 
             // frmMain
             // 

@@ -2051,15 +2051,10 @@ namespace Attendance
 
                     othrs = Math.Truncate(OverTime / 3600);
                     otmin = Math.Truncate((OverTime - (othrs * 3600)) / 60);
-                    //otmin = ((int)OverTime - (othrs * 60));
+                  
                     ot = othrs;
 
-                    //if (otmin >= 21 && otmin <= 50)
-                    //{
-                    //    ot = othrs + 0.5;
-                    //}
-                    //else 
-                    
+                   
                     if (otmin > 50 && otmin <= 59)
                     {
                         ot = othrs + 1;
@@ -2067,7 +2062,22 @@ namespace Attendance
 
                     if (ot >= 1)
                     {
-                        ot = ot - ShiftBreak;
+                        if (drAttd["WrkGrp"].ToString().Trim() == "CONT")
+                        {
+                            //as per discussion with Mr. Senapati dt 24/04/2019 for contractual employee deduct 1 hour for lunchbreak
+                            if (Convert.ToDateTime(drAttd["tDate"]).Date >= new DateTime(2019, 4, 1))
+                            {
+                                ot = ot - 1;
+                            }
+                            else
+                            {
+                                ot = ot - ShiftBreak;
+                            }
+                        }
+                        else
+                        {
+                            ot = ot - ShiftBreak;
+                        }
                     }
 
                     if (ot >= 1)
@@ -2078,9 +2088,7 @@ namespace Attendance
                             int tmn = Convert.ToInt32(drAttd["Latecome"].ToString().Substring(3, 2));
 
                             ot = ot - thr;
-                            if (tmn >= 15 && tmn <= 40)
-                                ot = ot - 0.5;
-                            else if (tmn >= 41 && tmn <= 59)
+                            if (tmn >= 15 && tmn <= 59)
                                 ot = ot - 1;
 
                         }
@@ -2094,7 +2102,7 @@ namespace Attendance
                         drAttd["CalcOvertime"] = 0;
                     }
                 }
-                else if (tOTFLG && drAttd["LeaveTyp"].ToString() == "WO")
+                else if (tOTFLG && ( drAttd["LeaveTyp"].ToString() == "WO" || drAttd["LeaveTyp"].ToString() == "HL") )
                 {
 
                     TimeSpan t3 = (Convert.ToDateTime(drAttd["ConsOut"]) - Convert.ToDateTime(drAttd["ConsIn"]));
@@ -2112,11 +2120,7 @@ namespace Attendance
                         //otmin = ((int)OverTime - (othrs * 60));
                         ot = othrs;
 
-                        //if (otmin >= 21 && otmin <= 50)
-                        //{
-                        //    ot = othrs + 0.5;
-                        //}
-                        //else 
+                        
                         if (otmin > 50 && otmin <= 59)
                         {
                             ot = othrs + 1;
@@ -2124,9 +2128,24 @@ namespace Attendance
 
                         if (ot >= 1)
                         {
-                            ot = ot - ShiftBreak;
+                            if (drAttd["WrkGrp"].ToString().Trim() == "CONT")
+                            {
+                                //as per discussion with Mr. Senapati dt 24/04/2019 for contractual employee deduct 1 hour for lunchbreak
+                                if (Convert.ToDateTime(drAttd["tDate"]).Date >= new DateTime(2019, 4, 1))
+                                {
+                                    ot = ot - 1;
+                                }
+                                else
+                                {
+                                    ot = ot - ShiftBreak;
+                                }
+                            }
+                            else
+                            {
+                                ot = ot - ShiftBreak;
+                            }
                         }
-
+                        
                         if (ot >= 1)
                         {
                             drAttd["ConsOverTime"] = ot;
@@ -2140,51 +2159,7 @@ namespace Attendance
 
                     }
                 }
-                else if (tOTFLG && drAttd["LeaveTyp"].ToString() == "HL")
-                {
-                    TimeSpan t3 = (Convert.ToDateTime(drAttd["ConsOut"]) - Convert.ToDateTime(drAttd["ConsIn"]));
-
-                    //OverTime = (Convert.ToDouble(drAttd["ConsWrkHrs"]) - BreakHours);
-                    if (t3.TotalHours >= 1)
-                    {
-
-                        OverTime = t3.TotalSeconds;
-                        double othrs = 0, otmin = 0;
-                        double ot = 0;
-
-                        othrs = Math.Truncate(OverTime / 3600);
-                        otmin = Math.Truncate((OverTime - (othrs * 3600)) / 60);
-                        //otmin = ((int)OverTime - (othrs * 60));
-                        ot = othrs;
-
-                        //if (otmin >= 21 && otmin <= 50)
-                        //{
-                        //    ot = othrs + 0.5;
-                        //}
-                        //else 
-                        if (otmin > 50 && otmin <= 59)
-                        {
-                            ot = othrs + 1;
-                        }
-
-                        if (ot >= 1)
-                        {
-                            ot = ot - ShiftBreak;
-                        }
-
-                        if (ot >= 1)
-                        {
-                            drAttd["ConsOverTime"] = ot;
-                            drAttd["CalcOvertime"] = ot;
-                        }
-                        else
-                        {
-                            drAttd["ConsOverTime"] = 0;
-                            drAttd["CalcOvertime"] = 0;
-                        }
-
-                    }
-                }
+                
                 else if (tOTFLG && drAttd["LeaveTyp"].ToString() == "SH")
                 {
                     TimeSpan t3 = (Convert.ToDateTime(drAttd["ConsOut"]) - ShiftEnd);
@@ -2197,11 +2172,7 @@ namespace Attendance
                     //otmin = ((int)OverTime - (othrs * 60));
                     ot = othrs;
 
-                    //if (otmin >= 21 && otmin <= 50)
-                    //{
-                    //    ot = othrs + 0.5;
-                    //}
-                    //else 
+                   
 
                     if (otmin > 50 && otmin <= 59)
                     {
@@ -2210,7 +2181,22 @@ namespace Attendance
 
                     if (ot >= 1)
                     {
-                        ot = ot - ShiftBreak;
+                        if (drAttd["WrkGrp"].ToString().Trim() == "CONT")
+                        {
+                            //as per mail with Mr. Senapati dt 24/04/2019 for contractual employee deduct 1 hour for lunchbreak
+                            if (Convert.ToDateTime(drAttd["tDate"]).Date >= new DateTime(2019, 4, 1))
+                            {
+                                ot = ot - 1;
+                            }
+                            else
+                            {
+                                ot = ot - ShiftBreak;
+                            }
+                        }
+                        else
+                        {
+                            ot = ot - ShiftBreak;
+                        }
                     }
 
                     if (ot >= 1)
@@ -2221,9 +2207,7 @@ namespace Attendance
                             int tmn = Convert.ToInt32(drAttd["Latecome"].ToString().Substring(3, 2));
 
                             ot = ot - thr;
-                            if (tmn >= 15 && tmn <= 40)
-                                ot = ot - 0.5;
-                            else if (tmn >= 41 && tmn <= 59)
+                            if (tmn >= 15 && tmn <= 59)
                                 ot = ot - 1;
 
                         }
@@ -2246,6 +2230,9 @@ namespace Attendance
 
                
                 daAttdData.Update(dsAttdData, "AttdData");
+
+                
+
 
                 #endregion OTCalc
 

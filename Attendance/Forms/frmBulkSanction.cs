@@ -160,10 +160,33 @@ namespace Attendance.Forms
                         try
                         {
                             DateTime tAddDt = Convert.ToDateTime(Utils.Helper.GetDescription("Select GetDate()", Utils.Helper.constr));
-            
+                            
+
+                            //added 10/04/2019-Deloitee Auditor issue Mail Dated 02/04/2019
+                            if (Convert.ToDateTime(dr["SanDate"]).Date > tAddDt.Date)
+                            {
+                                if (dr["InTime"].ToString() != "" || dr["OutTime"].ToString() != "" || dr["TPAHours"].ToString() != "")
+                                {
+                                    dr["InTime"] = DBNull.Value;
+                                    dr["OutTime"] = DBNull.Value;
+                                    
+                                    double t = 0;
+                                    if (double.TryParse(dr["TPAHours"].ToString(), out t))
+                                    {
+                                        if (t > 0)
+                                        {
+                                            dr["TPAHours"] = "";
+                                        }
+                                    }
+
+                                    dr["Remarks"] = "Future date sanction (In Time/Out Time/TPA Hours) denied";
+                                }
+                            }
+
                             //added on 02-12-2014 full rights skip the validation
-                            if (Utils.User.IsAdmin == false)
-                            {               
+                            if (Utils.User.IsAdmin == false) 
+                            {
+               
                                 //'check does not allow morethan 2 days blank intime and outtime
                                 TimeSpan ts = tAddDt - Convert.ToDateTime(dr["SanDate"]);
                                
@@ -190,7 +213,7 @@ namespace Attendance.Forms
                                 }
 
                             }
-            
+                            
                             
                             
                             Emp.CompCode = "01";

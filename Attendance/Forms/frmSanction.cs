@@ -1052,8 +1052,18 @@ namespace Attendance.Forms
 
                 }   
             }
-   
-            
+
+            if (txtInTime.Time.Hour > 0 || txtOutTime.Time.Hour > 0 || txtOT.Value > 0)
+            {
+
+                if (reqDate > curDate.Date)
+                {
+                    MessageBox.Show("Future date sanction (In Time/Out Time/TPA Hours) denied", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+            }  
+
             string  sql ;
             string  sqlintime = string.Empty ,sqlouttime = string.Empty, sqlShift = string.Empty, sqlOt = string.Empty, sqlremarks = string.Empty;
    
@@ -1312,8 +1322,22 @@ namespace Attendance.Forms
                                     sToDate = tempdt.AddDays(1);
 
                                 }
-                                string sql = "Delete From MastLeaveSchedule where SanID = '" + sanid.ToString() + "' and SchLeave is null and SchShift is null ";
+
+                                string sql = "Insert into MastLeaveScheduleDelHistory ( " +
+                                    "[SanID],[EmpUnqID],[tDate],[WrkGrp],[ConsInTime],[ConsOutTime],[ConsOverTime]," +
+                                    "[ConsShift],[SchShift],[SchLeave],[SchLeaveAdv],[SchLeaveHalf],[SchInstedOf]," +
+                                    "[tyear],[tyearmt],[AddDt],[AddID],[UpdDt],[UpdID],[DelFlg],[Remarks])  " +
+                                    "Select " +
+                                    "[SanID],[EmpUnqID],[tDate],[WrkGrp],[ConsInTime],[ConsOutTime],[ConsOverTime]," +
+                                    "[ConsShift],[SchShift],[SchLeave],[SchLeaveAdv],[SchLeaveHalf],[SchInstedOf]," +
+                                    "[tyear],[tyearmt],[AddDt],[AddID],GetDate(),'" + Utils.User.GUserID + "',[DelFlg], 'Changed By " + Utils.User.GUserID + "'" +
+                                    " from MastLeaveSchedule where SanID ='" + sanid.ToString() + "' ";
+
                                 SqlCommand cmd = new SqlCommand(sql, cn);
+                                cmd.ExecuteNonQuery();
+
+                                sql = "Delete From MastLeaveSchedule where SanID = '" + sanid.ToString() + "' and SchLeave is null and SchShift is null ";
+                                cmd = new SqlCommand(sql, cn);
                                 cmd.ExecuteNonQuery();
 
                                 sql = "Update MastLeaveSchedule set ConsInTime = null , ConsOutTime = null , ConsShift = null, ConsOverTime = null where SanID = '" + sanid.ToString() + "' ";
