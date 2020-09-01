@@ -28,13 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.grpUserRights = new System.Windows.Forms.GroupBox();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtRestAPI = new DevExpress.XtraEditors.TextEdit();
+            this.chkRestPost = new DevExpress.XtraEditors.CheckEdit();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtLocation = new DevExpress.XtraEditors.TextEdit();
+            this.chkMaster = new DevExpress.XtraEditors.CheckEdit();
+            this.chkActive = new DevExpress.XtraEditors.CheckEdit();
             this.label6 = new System.Windows.Forms.Label();
             this.chkGateInOut = new DevExpress.XtraEditors.CheckEdit();
             this.chkFinger = new DevExpress.XtraEditors.CheckEdit();
@@ -57,12 +59,20 @@
             this.Group2 = new System.Windows.Forms.GroupBox();
             this.grid = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.chkActive = new DevExpress.XtraEditors.CheckEdit();
-            this.chkMaster = new DevExpress.XtraEditors.CheckEdit();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtLocation = new DevExpress.XtraEditors.TextEdit();
+            this.grpUserRights = new System.Windows.Forms.GroupBox();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.grpUserRights.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRestAPI.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkRestPost.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLocation.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkMaster.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkActive.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkGateInOut.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkFinger.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkLunchInOut.Properties)).BeginInit();
@@ -79,18 +89,36 @@
             this.Group2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkActive.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkMaster.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtLocation.Properties)).BeginInit();
+            this.grpUserRights.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 500F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.grpUserRights, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Group2, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.77155F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.22846F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1150, 508);
+            this.tableLayoutPanel1.TabIndex = 24;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.txtRestAPI);
+            this.groupBox1.Controls.Add(this.chkRestPost);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtLocation);
             this.groupBox1.Controls.Add(this.chkMaster);
             this.groupBox1.Controls.Add(this.chkActive);
-            this.groupBox1.Controls.Add(this.grpUserRights);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.chkGateInOut);
             this.groupBox1.Controls.Add(this.chkFinger);
@@ -110,87 +138,82 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtDescription);
             this.groupBox1.Controls.Add(this.txtIPAdd);
-            this.groupBox1.Location = new System.Drawing.Point(12, 3);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(865, 174);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.Size = new System.Drawing.Size(494, 429);
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
-            // grpUserRights
+            // label8
             // 
-            this.grpUserRights.Controls.Add(this.btnClose);
-            this.grpUserRights.Controls.Add(this.btnCancel);
-            this.grpUserRights.Controls.Add(this.btnDelete);
-            this.grpUserRights.Controls.Add(this.btnUpdate);
-            this.grpUserRights.Controls.Add(this.btnAdd);
-            this.grpUserRights.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grpUserRights.Location = new System.Drawing.Point(3, 119);
-            this.grpUserRights.Name = "grpUserRights";
-            this.grpUserRights.Size = new System.Drawing.Size(859, 52);
-            this.grpUserRights.TabIndex = 22;
-            this.grpUserRights.TabStop = false;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 151);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(66, 15);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "REST API :";
             // 
-            // btnClose
+            // txtRestAPI
             // 
-            this.btnClose.BackColor = System.Drawing.Color.Cornsilk;
-            this.btnClose.Location = new System.Drawing.Point(520, 14);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 32);
-            this.btnClose.TabIndex = 5;
-            this.btnClose.Text = "Clos&e";
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.txtRestAPI.Location = new System.Drawing.Point(98, 146);
+            this.txtRestAPI.Name = "txtRestAPI";
+            this.txtRestAPI.Properties.Mask.EditMask = "[0-9A-Za-z:.?=&/]+";
+            this.txtRestAPI.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            this.txtRestAPI.Properties.Mask.ShowPlaceHolders = false;
+            this.txtRestAPI.Size = new System.Drawing.Size(361, 20);
+            this.txtRestAPI.TabIndex = 28;
             // 
-            // btnCancel
+            // chkRestPost
             // 
-            this.btnCancel.BackColor = System.Drawing.Color.Cornsilk;
-            this.btnCancel.Location = new System.Drawing.Point(440, 14);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 32);
-            this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "&Cancel";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.chkRestPost.Location = new System.Drawing.Point(11, 123);
+            this.chkRestPost.Name = "chkRestPost";
+            this.chkRestPost.Properties.Caption = "REST Post";
+            this.chkRestPost.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.chkRestPost.Size = new System.Drawing.Size(104, 19);
+            this.chkRestPost.TabIndex = 27;
             // 
-            // btnDelete
+            // label7
             // 
-            this.btnDelete.BackColor = System.Drawing.Color.Cornsilk;
-            this.btnDelete.Location = new System.Drawing.Point(359, 14);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 32);
-            this.btnDelete.TabIndex = 3;
-            this.btnDelete.Text = "&Delete";
-            this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 99);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(54, 15);
+            this.label7.TabIndex = 26;
+            this.label7.Text = "Location";
             // 
-            // btnUpdate
+            // txtLocation
             // 
-            this.btnUpdate.BackColor = System.Drawing.Color.Cornsilk;
-            this.btnUpdate.Location = new System.Drawing.Point(278, 14);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(75, 32);
-            this.btnUpdate.TabIndex = 2;
-            this.btnUpdate.Text = "&Update";
-            this.btnUpdate.UseVisualStyleBackColor = false;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.txtLocation.Location = new System.Drawing.Point(98, 97);
+            this.txtLocation.Name = "txtLocation";
+            this.txtLocation.Properties.Mask.ShowPlaceHolders = false;
+            this.txtLocation.Size = new System.Drawing.Size(228, 20);
+            this.txtLocation.TabIndex = 3;
             // 
-            // btnAdd
+            // chkMaster
             // 
-            this.btnAdd.BackColor = System.Drawing.Color.Cornsilk;
-            this.btnAdd.Location = new System.Drawing.Point(197, 14);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 32);
-            this.btnAdd.TabIndex = 1;
-            this.btnAdd.Text = "&Add";
-            this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.chkMaster.Location = new System.Drawing.Point(230, 205);
+            this.chkMaster.Name = "chkMaster";
+            this.chkMaster.Properties.Caption = "Master Machine :";
+            this.chkMaster.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.chkMaster.Size = new System.Drawing.Size(110, 19);
+            this.chkMaster.TabIndex = 12;
+            // 
+            // chkActive
+            // 
+            this.chkActive.Location = new System.Drawing.Point(230, 230);
+            this.chkActive.Name = "chkActive";
+            this.chkActive.Properties.Caption = "Active :";
+            this.chkActive.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.chkActive.Size = new System.Drawing.Size(110, 19);
+            this.chkActive.TabIndex = 13;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.DarkRed;
-            this.label6.Location = new System.Drawing.Point(479, 17);
+            this.label6.Location = new System.Drawing.Point(1, 178);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(106, 15);
             this.label6.TabIndex = 21;
@@ -198,7 +221,7 @@
             // 
             // chkGateInOut
             // 
-            this.chkGateInOut.Location = new System.Drawing.Point(614, 71);
+            this.chkGateInOut.Location = new System.Drawing.Point(113, 232);
             this.chkGateInOut.Name = "chkGateInOut";
             this.chkGateInOut.Properties.Caption = "For Gate In/Out :";
             this.chkGateInOut.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -207,7 +230,7 @@
             // 
             // chkFinger
             // 
-            this.chkFinger.Location = new System.Drawing.Point(495, 97);
+            this.chkFinger.Location = new System.Drawing.Point(17, 258);
             this.chkFinger.Name = "chkFinger";
             this.chkFinger.Properties.Caption = "Finger Scan :";
             this.chkFinger.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -216,7 +239,7 @@
             // 
             // chkLunchInOut
             // 
-            this.chkLunchInOut.Location = new System.Drawing.Point(614, 45);
+            this.chkLunchInOut.Location = new System.Drawing.Point(113, 206);
             this.chkLunchInOut.Name = "chkLunchInOut";
             this.chkLunchInOut.Properties.Caption = "For Lunch In/Out :";
             this.chkLunchInOut.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -225,7 +248,7 @@
             // 
             // chkMessUse
             // 
-            this.chkMessUse.Location = new System.Drawing.Point(614, 98);
+            this.chkMessUse.Location = new System.Drawing.Point(113, 259);
             this.chkMessUse.Name = "chkMessUse";
             this.chkMessUse.Properties.Caption = "For Canteen Use :";
             this.chkMessUse.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -234,7 +257,7 @@
             // 
             // chkFace
             // 
-            this.chkFace.Location = new System.Drawing.Point(495, 70);
+            this.chkFace.Location = new System.Drawing.Point(17, 231);
             this.chkFace.Name = "chkFace";
             this.chkFace.Properties.Caption = "Face Reader :";
             this.chkFace.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -243,7 +266,7 @@
             // 
             // chkRFID
             // 
-            this.chkRFID.Location = new System.Drawing.Point(495, 44);
+            this.chkRFID.Location = new System.Drawing.Point(17, 205);
             this.chkRFID.Name = "chkRFID";
             this.chkRFID.Properties.Caption = "RFID :";
             this.chkRFID.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -279,7 +302,7 @@
             // 
             // chkAuto
             // 
-            this.chkAuto.Location = new System.Drawing.Point(744, 94);
+            this.chkAuto.Location = new System.Drawing.Point(230, 255);
             this.chkAuto.Name = "chkAuto";
             this.chkAuto.Properties.Caption = "Auto Clear :";
             this.chkAuto.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
@@ -325,7 +348,6 @@
             this.txtCompCode.Name = "txtCompCode";
             this.txtCompCode.Size = new System.Drawing.Size(42, 20);
             this.txtCompCode.TabIndex = 0;
-            this.txtCompCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCompCode_KeyDown);
             this.txtCompCode.Validated += new System.EventHandler(this.txtCompCode_Validated);
             // 
             // label2
@@ -365,16 +387,17 @@
             this.txtIPAdd.Properties.Mask.ShowPlaceHolders = false;
             this.txtIPAdd.Size = new System.Drawing.Size(228, 20);
             this.txtIPAdd.TabIndex = 1;
-            this.txtIPAdd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtIPAdd_KeyDown);
             this.txtIPAdd.Validated += new System.EventHandler(this.txtIPAdd_Validated);
             // 
             // Group2
             // 
             this.Group2.Controls.Add(this.grid);
-            this.Group2.Location = new System.Drawing.Point(12, 174);
+            this.Group2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Group2.Location = new System.Drawing.Point(503, 3);
             this.Group2.Name = "Group2";
-            this.Group2.Size = new System.Drawing.Size(865, 322);
-            this.Group2.TabIndex = 3;
+            this.tableLayoutPanel1.SetRowSpan(this.Group2, 2);
+            this.Group2.Size = new System.Drawing.Size(683, 502);
+            this.Group2.TabIndex = 4;
             this.Group2.TabStop = false;
             // 
             // grid
@@ -383,7 +406,8 @@
             this.grid.Location = new System.Drawing.Point(3, 17);
             this.grid.MainView = this.gridView1;
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(859, 302);
+            this.grid.Padding = new System.Windows.Forms.Padding(3);
+            this.grid.Size = new System.Drawing.Size(677, 482);
             this.grid.TabIndex = 0;
             this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -419,56 +443,101 @@
             this.gridView1.OptionsView.ShowGroupPanel = false;
             this.gridView1.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
             // 
-            // chkActive
+            // grpUserRights
             // 
-            this.chkActive.Location = new System.Drawing.Point(744, 69);
-            this.chkActive.Name = "chkActive";
-            this.chkActive.Properties.Caption = "Active :";
-            this.chkActive.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.chkActive.Size = new System.Drawing.Size(110, 19);
-            this.chkActive.TabIndex = 13;
+            this.grpUserRights.Controls.Add(this.btnClose);
+            this.grpUserRights.Controls.Add(this.btnCancel);
+            this.grpUserRights.Controls.Add(this.btnDelete);
+            this.grpUserRights.Controls.Add(this.btnUpdate);
+            this.grpUserRights.Controls.Add(this.btnAdd);
+            this.grpUserRights.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grpUserRights.Location = new System.Drawing.Point(3, 438);
+            this.grpUserRights.Name = "grpUserRights";
+            this.grpUserRights.Size = new System.Drawing.Size(494, 67);
+            this.grpUserRights.TabIndex = 26;
+            this.grpUserRights.TabStop = false;
             // 
-            // chkMaster
+            // btnClose
             // 
-            this.chkMaster.Location = new System.Drawing.Point(744, 44);
-            this.chkMaster.Name = "chkMaster";
-            this.chkMaster.Properties.Caption = "Master Machine :";
-            this.chkMaster.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Far;
-            this.chkMaster.Size = new System.Drawing.Size(110, 19);
-            this.chkMaster.TabIndex = 12;
+            this.btnClose.BackColor = System.Drawing.Color.Cornsilk;
+            this.btnClose.Location = new System.Drawing.Point(349, 14);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 32);
+            this.btnClose.TabIndex = 5;
+            this.btnClose.Text = "Clos&e";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // label7
+            // btnCancel
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 99);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(54, 15);
-            this.label7.TabIndex = 26;
-            this.label7.Text = "Location";
+            this.btnCancel.BackColor = System.Drawing.Color.Cornsilk;
+            this.btnCancel.Location = new System.Drawing.Point(265, 14);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 32);
+            this.btnCancel.TabIndex = 4;
+            this.btnCancel.Text = "&Cancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // txtLocation
+            // btnDelete
             // 
-            this.txtLocation.Location = new System.Drawing.Point(98, 97);
-            this.txtLocation.Name = "txtLocation";
-            this.txtLocation.Properties.Mask.ShowPlaceHolders = false;
-            this.txtLocation.Size = new System.Drawing.Size(228, 20);
-            this.txtLocation.TabIndex = 3;
+            this.btnDelete.BackColor = System.Drawing.Color.Cornsilk;
+            this.btnDelete.Location = new System.Drawing.Point(184, 14);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 32);
+            this.btnDelete.TabIndex = 3;
+            this.btnDelete.Text = "&Delete";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.BackColor = System.Drawing.Color.Cornsilk;
+            this.btnUpdate.Location = new System.Drawing.Point(103, 14);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(75, 32);
+            this.btnUpdate.TabIndex = 2;
+            this.btnUpdate.Text = "&Update";
+            this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.BackColor = System.Drawing.Color.Cornsilk;
+            this.btnAdd.Location = new System.Drawing.Point(22, 14);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 32);
+            this.btnAdd.TabIndex = 1;
+            this.btnAdd.Text = "&Add";
+            this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(124, 124);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(197, 15);
+            this.label9.TabIndex = 30;
+            this.label9.Text = "( Post Punch Details on REST API )";
             // 
             // frmReaderConfig
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(889, 508);
-            this.Controls.Add(this.Group2);
-            this.Controls.Add(this.groupBox1);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1150, 508);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmReaderConfig";
             this.Text = "Machine/Reader Configuration Master";
             this.Load += new System.EventHandler(this.frmReaderConfig_Load);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.grpUserRights.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtRestAPI.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkRestPost.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtLocation.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkMaster.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkActive.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkGateInOut.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkFinger.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkLunchInOut.Properties)).EndInit();
@@ -485,23 +554,29 @@
             this.Group2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkActive.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkMaster.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtLocation.Properties)).EndInit();
+            this.grpUserRights.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.GroupBox grpUserRights;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private DevExpress.XtraEditors.TextEdit txtDescription;
-        private DevExpress.XtraEditors.TextEdit txtIPAdd;
-        private System.Windows.Forms.Label label4;
-        private DevExpress.XtraEditors.TextEdit txtCompCode;
-        private DevExpress.XtraEditors.TextEdit txtCompName;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private DevExpress.XtraEditors.TextEdit txtRestAPI;
+        private DevExpress.XtraEditors.CheckEdit chkRestPost;
+        private System.Windows.Forms.Label label7;
+        private DevExpress.XtraEditors.TextEdit txtLocation;
+        private DevExpress.XtraEditors.CheckEdit chkMaster;
+        private DevExpress.XtraEditors.CheckEdit chkActive;
         private System.Windows.Forms.Label label6;
         private DevExpress.XtraEditors.CheckEdit chkGateInOut;
         private DevExpress.XtraEditors.CheckEdit chkFinger;
@@ -514,18 +589,16 @@
         private System.Windows.Forms.Label label3;
         private DevExpress.XtraEditors.CheckEdit chkAuto;
         private DevExpress.XtraEditors.ComboBoxEdit txtINOut;
+        private DevExpress.XtraEditors.TextEdit txtCompName;
+        private System.Windows.Forms.Label label4;
+        private DevExpress.XtraEditors.TextEdit txtCompCode;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private DevExpress.XtraEditors.TextEdit txtDescription;
+        private DevExpress.XtraEditors.TextEdit txtIPAdd;
         private System.Windows.Forms.GroupBox Group2;
-        private System.Windows.Forms.GroupBox grpUserRights;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnAdd;
         private DevExpress.XtraGrid.GridControl grid;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private System.Windows.Forms.Label label7;
-        private DevExpress.XtraEditors.TextEdit txtLocation;
-        private DevExpress.XtraEditors.CheckEdit chkMaster;
-        private DevExpress.XtraEditors.CheckEdit chkActive;
+
     }
 }

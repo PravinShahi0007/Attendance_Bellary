@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Attendance.Classes;
 
 namespace Attendance.Forms
 {
@@ -49,6 +50,64 @@ namespace Attendance.Forms
         }
 
 
+        private void call_Calc_StdHrs(DateTime tFromDt,  out string err)
+        {
+            err = string.Empty;
+            using (SqlConnection cn = new SqlConnection(Utils.Helper.constr))
+            {
+                try
+                {
+
+                    cn.Open();                    
+                    string sql  = string.Empty;
+                    sql = "Select EmpUnqID,WrkGrp  From MastEmp where WrkGrp in ('Comp','Cont') And Active = 1 ";
+                    DataSet dsEmp = Utils.Helper.GetData(sql, Utils.Helper.constr);
+                    bool hasRows = dsEmp.Tables.Cast<DataTable>().Any(table => table.Rows.Count != 0);
+
+                    if (hasRows)
+                    {
+                        foreach (DataRow drEmp in dsEmp.Tables[0].Rows)
+                        {
+                            
+                            //Open EmpAttdRecord
+                            sql = "Select tYear,tDate,CompCode,WrkGrp,EmpUnqID,ScheDuleShift,ConsShift,ConsIN,ConsOut,ConsWrkHrs,ConsOverTime," +
+                                "Status,HalfDay,LeaveTyp,LeaveHalf,ActualStatus,Earlycome,EarlyGoing,GracePeriod," +
+                                "INPunch1,OutPunch1,WrkHrs1,INPunch2,OutPunch2,WrkHrs2,INPunch3,OutPunch3," +
+                                "WrkHrs3,INPunch4,OutPunch4,WrkHrs4,TotalWorkhrs,TotalINPunchCount," +
+                                "TotalOutPunchCount,LateCome,Rules,CalcOverTime,HalfDRule,partdate,CostCode,StdHrsOT,StdShftHrs,StdWrkHrs,StdWrkShift " +
+                                " From AttdData where CompCode = '01' and tYear ='" + tFromDt.Year.ToString() + "'" +
+                                " And WrkGrp ='" + drEmp["WrkGrp"].ToString() + "' and tDate ='" + tFromDt.ToString("yyyy-MM-dd") + "'" +
+                                " And EmpUnqID ='" + drEmp["EmpUnqID"].ToString() + "'";
+
+                            //create data adapter
+                            DataSet dsAttdData = new DataSet();
+                            SqlDataAdapter daAttdData = new SqlDataAdapter(new SqlCommand(sql, cn));
+                            SqlCommandBuilder AttdCmdBuilder = new SqlCommandBuilder(daAttdData);
+
+                            daAttdData.Fill(dsAttdData, "AttdData");
+
+                            hasRows = dsAttdData.Tables.Cast<DataTable>().Any(table => table.Rows.Count != 0);
+                            if (hasRows)
+                            {
+                                foreach (DataRow drAttd in dsAttdData.Tables[0].Rows)
+                                {
+                                    clsProcess pr = new clsProcess();
+                                    pr.Calc_StdHrs(daAttdData, dsAttdData, drAttd);
+                                }
+                            }
+                                
+
+                        }//foreach employee
+                    }
+                }
+                catch (Exception ex)
+                {
+                    err = ex.Message;
+                }
+            }//using
+        }
+
+
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             if (txtDate.EditValue == null)
@@ -56,8 +115,8 @@ namespace Attendance.Forms
                 MessageBox.Show("Please Select Date....", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-           
             
+           
 
             DateTime tCurDate,tDate;
             int tCount ;
@@ -66,20 +125,24 @@ namespace Attendance.Forms
             tDate = txtDate.DateTime;    
             tCount = Convert.ToInt32(Utils.Helper.GetDescription("Select Count(*) From MastCostCodeManPowerRpt where tDate ='" + tDate.ToString("yyyy-MM-dd") + "'", Utils.Helper.constr));
         
-            ////check for already process...
-            //TimeSpan ts = (tCurDate - tDate);
-            //if (Math.Abs(ts.Days) > 1)
-            //{
-            //    if(tCount > 0)
-            //    {
-            //        MessageBox.Show("System Does not allow to process/Process Already Done....","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-            //        return;
-            //    }
-            //}
+            //check for already process...
+            TimeSpan ts = (tCurDate - tDate);
+            if (Math.Abs(ts.Days) > 1)
+            {
+                if(tCount > 0)
+                {
+                    this.Cursor = Cursors.WaitCursor;
+                    string err = string.Empty;
+                    call_Calc_StdHrs(txtDate.DateTime.Date, out err);
+                    this.Cursor = Cursors.Default;
+                    MessageBox.Show("System Does not allow to process/Process Already Done....","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
            
             Application.DoEvents();
-
+            this.Cursor = Cursors.WaitCursor;
             using (SqlConnection cn = new SqlConnection(Utils.Helper.constr))
             {
                
@@ -132,21 +195,30 @@ namespace Attendance.Forms
                             cmd.CommandType = CommandType.Text;
                             cmd.CommandText = sql;
                             cmd.ExecuteNonQuery();
+
+                            string err = string.Empty;
+
+                            call_Calc_StdHrs(txtDate.DateTime.Date, out err);
                             MessageBox.Show("Process Completed...", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
+                            string err = string.Empty;
+                            call_Calc_StdHrs(txtDate.DateTime.Date, out err);
                             MessageBox.Show("Process Completed with some errors", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                       
+                        
                         ResetCtrl();
+                        
 
                     }catch(Exception ex){
                         ResetCtrl();
                         MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 
-            }
+            }//using connection
+
+            this.Cursor = Cursors.Default;
 
         }
 

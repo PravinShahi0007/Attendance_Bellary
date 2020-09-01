@@ -177,7 +177,71 @@ namespace Attendance
 
             }//using connection
         }
+        
+        public void EmpCostCodeRpt_Process(string tEmpUnqID, DateTime tFromDt, out int result, out string err)
+        {
+            result = 0;
+            err = string.Empty;
+            string proerr = string.Empty;
 
+            #region chk_primary
+            if (string.IsNullOrEmpty(tEmpUnqID))
+            {
+
+                proerr = "EmpUnqID required...";
+                err = proerr;
+                return;
+            }
+
+            if (tFromDt == DateTime.MinValue)
+            {
+                proerr = "Invalid From Date...";
+                err = proerr;
+                return;
+            }
+
+            #endregion chk_primary
+
+            //call main store proce.
+            using (SqlConnection cn = new SqlConnection(Utils.Helper.constr))
+            {
+                try
+                {
+
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = cn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = "sp_rpt_CostCodeDailyEmpManPower";
+
+                        cmd.Parameters.AddWithValue("@pDate", tFromDt);
+                        cmd.Parameters.AddWithValue("@pEmpUnqId", tEmpUnqID);
+                        cmd.Parameters.Add("@result", SqlDbType.Int, 4);
+                        cmd.Parameters["@result"].Direction = ParameterDirection.Output;
+                        cmd.CommandTimeout = 0;
+                        cmd.ExecuteNonQuery();
+
+                        //get the output
+                        result = Convert.ToInt32(cmd.Parameters["@result"].Value.ToString());
+
+                        err = string.Empty;
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    err = ex.Message.ToString();
+                    result = 0;
+                }
+
+            }//using connection
+
+
+
+        }
+        
         public void AttdProcess(string tEmpUnqID, DateTime tFromDt, DateTime tToDate, out int result,out string err)
         {
             result = 0;
@@ -312,7 +376,7 @@ namespace Attendance
                                 "Status,HalfDay,LeaveTyp,LeaveHalf,ActualStatus,Earlycome,EarlyGoing,GracePeriod," +
                                 "INPunch1,OutPunch1,WrkHrs1,INPunch2,OutPunch2,WrkHrs2,INPunch3,OutPunch3," +
                                 "WrkHrs3,INPunch4,OutPunch4,WrkHrs4,TotalWorkhrs,TotalINPunchCount," +
-                                "TotalOutPunchCount,LateCome,Rules,CalcOverTime,HalfDRule,partdate,CostCode " +
+                                "TotalOutPunchCount,LateCome,Rules,CalcOverTime,HalfDRule,partdate,CostCode,StdHrsOT,StdShftHrs,StdWrkHrs,StdWrkShift " +
                                 " from AttdData where CompCode = '01' and tYear ='" + drDate["CalYear"].ToString() +
                                 "' and EmpUnqID = '" + Emp.EmpUnqID + "' and tDate ='" + Convert.ToDateTime(drDate["Date"]).ToString("yyyy-MM-dd") + "'" +
                                 " And WrkGrp = '" + Emp.WrkGrp + "'  ";
@@ -330,7 +394,8 @@ namespace Attendance
 
                                 foreach (DataRow drAttd in dsAttdData.Tables[0].Rows)
                                 {
-
+                                    //do-not check if any sanction in/out found. added on 11-01-2020
+                                    bool ChkSanInOut = false;
 
                                     #region SanctionINTime
                                     //Check for Sanction In Time
@@ -347,6 +412,7 @@ namespace Attendance
                                     if (!string.IsNullOrEmpty(insantime))
                                     {
                                         drAttd["ConsIN"] = Convert.ToDateTime(insantime);
+                                        ChkSanInOut = true;
                                     }
                                     else
                                     {
@@ -429,6 +495,7 @@ namespace Attendance
                                     if (!string.IsNullOrEmpty(outsantime))
                                     {
                                         drAttd["ConsOut"] = Convert.ToDateTime(outsantime);
+                                        ChkSanInOut = true;
                                     }
                                     else
                                     {
@@ -441,56 +508,61 @@ namespace Attendance
 
                                     #endregion SanctionOutTime
 
-                                    #region Check_For_Continueous_Duty
-
-                                    if (drAttd["InPunch1"] != DBNull.Value && drAttd["OutPunch1"] != DBNull.Value && drAttd["InPunch2"] != DBNull.Value && drAttd["OutPunch2"] != DBNull.Value)
+                                    if (!ChkSanInOut)
                                     {
-                                        if (Convert.ToDateTime(drAttd["InPunch1"]).ToString("yyyy-MM-dd")
-                                            == Convert.ToDateTime(drAttd["InPunch2"]).ToString("yyyy-MM-dd"))
-                                        {
-                                            TimeSpan outdiff1 = Convert.ToDateTime(drAttd["OutPunch1"]) - Convert.ToDateTime(drAttd["InPunch2"]);
-                                            if (outdiff1.TotalMinutes <= 60 && outdiff1.TotalMinutes >= 0)
-                                            {
-                                                TimeSpan outdiff2 = Convert.ToDateTime(drAttd["InPunch1"]) - Convert.ToDateTime(drAttd["OutPunch1"]);
-                                                if (outdiff2.TotalHours >= 6)
-                                                {
-                                                    drAttd["ConsIn"] = drAttd["InPunch1"];
-                                                    drAttd["ConsOut"] = drAttd["OutPunch2"];
-                                                    daAttdData.Update(dsAttdData, "AttdData");
-                                                }
-                                            }
-                                        }
-                                    }
-                                    #endregion Check_For_Continueous_Duty
 
-                                    #region Check_For_Maximum_Hours
+                                        #region Check_For_Continueous_Duty
 
-                                    if (drAttd["InPunch1"] != DBNull.Value && drAttd["OutPunch1"] != DBNull.Value && drAttd["InPunch2"] != DBNull.Value && drAttd["OutPunch2"] != DBNull.Value)
-                                    {
-                                        if (Convert.ToDateTime(drAttd["OutPunch2"]) > Convert.ToDateTime(drAttd["OutPunch1"]))
+                                        if (drAttd["InPunch1"] != DBNull.Value && drAttd["OutPunch1"] != DBNull.Value && drAttd["InPunch2"] != DBNull.Value && drAttd["OutPunch2"] != DBNull.Value)
                                         {
                                             if (Convert.ToDateTime(drAttd["InPunch1"]).ToString("yyyy-MM-dd")
-                                            == Convert.ToDateTime(drAttd["InPunch2"]).ToString("yyyy-MM-dd"))
+                                                == Convert.ToDateTime(drAttd["InPunch2"]).ToString("yyyy-MM-dd"))
                                             {
-                                                if (Convert.ToDouble(drAttd["WrkHrs1"]) > Convert.ToDouble(drAttd["WrkHrs2"]))
+                                                TimeSpan outdiff1 = Convert.ToDateTime(drAttd["OutPunch1"]) - Convert.ToDateTime(drAttd["InPunch2"]);
+                                                if (outdiff1.TotalMinutes <= 60 && outdiff1.TotalMinutes >= 0)
                                                 {
-                                                    drAttd["ConsIn"] = drAttd["InPunch1"];
-                                                    drAttd["ConsOut"] = drAttd["OutPunch1"];
-                                                    drAttd["ConsWrkHrs"] = drAttd["WrkHrs1"];
-                                                    daAttdData.Update(dsAttdData, "AttdData");
-                                                }
-                                                else
-                                                {
-                                                    drAttd["ConsIn"] = drAttd["InPunch2"];
-                                                    drAttd["ConsOut"] = drAttd["OutPunch2"];
-                                                    drAttd["ConsWrkHrs"] = drAttd["WrkHrs2"];
-                                                    daAttdData.Update(dsAttdData, "AttdData");
+                                                    TimeSpan outdiff2 = Convert.ToDateTime(drAttd["InPunch1"]) - Convert.ToDateTime(drAttd["OutPunch1"]);
+                                                    if (outdiff2.TotalHours >= 6)
+                                                    {
+                                                        drAttd["ConsIn"] = drAttd["InPunch1"];
+                                                        drAttd["ConsOut"] = drAttd["OutPunch2"];
+                                                        daAttdData.Update(dsAttdData, "AttdData");
+                                                    }
                                                 }
                                             }
-
                                         }
+                                        #endregion Check_For_Continueous_Duty
+
+                                        #region Check_For_Maximum_Hours
+
+                                        if (drAttd["InPunch1"] != DBNull.Value && drAttd["OutPunch1"] != DBNull.Value && drAttd["InPunch2"] != DBNull.Value && drAttd["OutPunch2"] != DBNull.Value)
+                                        {
+                                            if (Convert.ToDateTime(drAttd["OutPunch2"]) > Convert.ToDateTime(drAttd["OutPunch1"]))
+                                            {
+                                                if (Convert.ToDateTime(drAttd["InPunch1"]).ToString("yyyy-MM-dd")
+                                                == Convert.ToDateTime(drAttd["InPunch2"]).ToString("yyyy-MM-dd"))
+                                                {
+                                                    if (Convert.ToDouble(drAttd["WrkHrs1"]) > Convert.ToDouble(drAttd["WrkHrs2"]))
+                                                    {
+                                                        drAttd["ConsIn"] = drAttd["InPunch1"];
+                                                        drAttd["ConsOut"] = drAttd["OutPunch1"];
+                                                        drAttd["ConsWrkHrs"] = drAttd["WrkHrs1"];
+                                                        daAttdData.Update(dsAttdData, "AttdData");
+                                                    }
+                                                    else
+                                                    {
+                                                        drAttd["ConsIn"] = drAttd["InPunch2"];
+                                                        drAttd["ConsOut"] = drAttd["OutPunch2"];
+                                                        drAttd["ConsWrkHrs"] = drAttd["WrkHrs2"];
+                                                        daAttdData.Update(dsAttdData, "AttdData");
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                        #endregion Check_For_Maximum_Hours
+                                                                               
                                     }
-                                    #endregion Check_For_Maximum_Hours
 
                                     #region Double_Check_ConsIn
                                     if (drAttd["ConsIN"] == DBNull.Value)
@@ -563,7 +635,7 @@ namespace Attendance
 
 
                                     #endregion Double_Check_ConsOut
-
+                                    
 
                                     //## 07-04-2018 Commit AutoOut.. Corrected 12/04/2018->Consider FixShift and AutoShift Employee
                                     #region AutoOut
@@ -852,6 +924,16 @@ namespace Attendance
                                     daAttdData.Update(dsAttdData, "AttdData");
 
                                     #endregion Final_Status_Marking
+
+
+                                    //new requirement mailed 05/05/2020 
+                                    //shiftwise/costcenter wise manpower with based on stdshift hours
+                                    //required two new additional fields in attd data table
+                                    #region StdShift_wise_OverTime
+                                    Calc_StdHrs(daAttdData, dsAttdData, drAttd);
+                                    #endregion
+
+
 
                                     #region GateInOutProcess_CONT
                                     //if (Emp.WrkGrp == "CONT")
@@ -2821,6 +2903,124 @@ namespace Attendance
         
         }
 
+        public void Calc_StdHrs(SqlDataAdapter daAttdData, DataSet dsAttdData, DataRow drAttd)
+        {
+            double stdhrs = 0;
+            string err2 = string.Empty;
+            string stdhrs2 = Utils.Helper.GetDescription("Select StdShiftHrs from MastShift where ShiftCode ='" + drAttd["ConsShift"].ToString() + "'", Utils.Helper.constr, out err2);
+
+            double.TryParse(stdhrs2, out stdhrs);
+
+            drAttd["StdShftHrs"] = stdhrs;
+            drAttd["StdHrsOT"] = 0;
+            drAttd["StdWrkHrs"] = 0;
+            drAttd["StdWrkShift"] = drAttd["ConsShift"];
+            daAttdData.Update(dsAttdData, "AttdData");
+
+            if (Convert.ToDouble(drAttd["ConsWrkHrs"]) > 0 && drAttd["Status"].ToString() == "P" && Convert.ToDouble(drAttd["StdShftHrs"]) > 0)
+            {
+
+                drAttd["StdWrkHrs"] = Convert.ToDouble(drAttd["ConsWrkHrs"]) - stdhrs;
+                double thour = 0;
+
+                if (drAttd["ConsIn"] != DBNull.Value && drAttd["ConsOut"] != DBNull.Value && !string.IsNullOrEmpty(drAttd["ConsShift"].ToString()))
+                {
+
+
+                    try
+                    {
+                        string shiftstarttime = Utils.Helper.GetDescription("Select [ShiftStart] from MastShift where ShiftCode ='" + drAttd["ConsShift"].ToString() + "'", Utils.Helper.constr, out err2);
+                        DateTime tInTime = Convert.ToDateTime(drAttd["ConsIn"]);
+                        DateTime tShiftStart = Convert.ToDateTime(drAttd["tDate"]);
+                        DateTime tmpStart = Convert.ToDateTime(shiftstarttime);
+
+                        tShiftStart = new DateTime(tShiftStart.Year, tShiftStart.Month, tShiftStart.Day, tmpStart.Hour, tmpStart.Minute, tmpStart.Second);
+
+                        //tShiftStart.AddHours(tmpStart.Hour);
+                        //tShiftStart.AddMinutes(tmpStart.Minute);
+
+                        int tminute = 0;
+
+
+                        if (tInTime < tShiftStart)
+                        {
+                            tInTime = tShiftStart;
+                        }
+
+
+                        TimeSpan ts = (Convert.ToDateTime(drAttd["ConsOut"]) - tInTime);
+
+                        thour = ts.Hours;
+                        tminute = ts.Minutes;
+
+                        if (tminute > 30 && tminute <= 50)
+                        {
+                            thour += 0.5;
+                        }
+                        else if (tminute > 51)
+                        {
+                            thour += 1;
+                        }
+
+                        drAttd["StdWrkHrs"] = thour;
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                    daAttdData.Update(dsAttdData, "AttdData");
+
+                }
+
+
+                if (Convert.ToDouble(drAttd["ConsWrkHrs"]) > 0 && Convert.ToDouble(drAttd["ConsOverTime"]) > 0)
+                {
+                    if ((drAttd["LeaveTyp"].ToString() == "WO" || drAttd["LeaveTyp"].ToString() == "HL"))
+                    {
+                        if (drAttd["WrkGrp"].ToString() == "CONT" && thour > 0 && thour > stdhrs)
+                        {
+                            drAttd["StdWrkShift"] = drAttd["ConsShift"];
+                            drAttd["StdHrsOT"] = thour - stdhrs;
+                        }
+                        else if (drAttd["WrkGrp"].ToString() == "COMP")
+                        {
+                            drAttd["StdWrkShift"] = drAttd["LeaveTyp"].ToString();
+                            drAttd["StdHrsOT"] = Convert.ToDouble(drAttd["ConsOverTime"]);
+                        }
+
+                    }
+                    else if (Convert.ToDouble(drAttd["StdWrkHrs"]) > stdhrs)
+                    {
+                        drAttd["StdHrsOT"] = Convert.ToDouble(drAttd["StdWrkHrs"]) - stdhrs;
+                    }
+                    else if (Convert.ToDouble(drAttd["StdWrkHrs"]) <= stdhrs)
+                    {
+                        drAttd["StdHrsOT"] = 0;
+                    }
+                }
+                else if (Convert.ToDouble(drAttd["ConsWrkHrs"]) > 0 && Convert.ToDouble(drAttd["ConsOverTime"]) <= 0)
+                {
+                    if (drAttd["LeaveTyp"].ToString() == "WO" || drAttd["LeaveTyp"].ToString() == "HL")
+                    {
+
+                        drAttd["StdWrkShift"] = drAttd["LeaveTyp"].ToString();
+
+                    }
+
+                }
+
+            }
+            else if (Convert.ToDouble(drAttd["ConsWrkHrs"]) <= 0 && Convert.ToDouble(drAttd["ConsOverTime"]) <= 0)
+            {
+                if (drAttd["LeaveTyp"].ToString() == "WO" || drAttd["LeaveTyp"].ToString() == "HL")
+                {
+                    drAttd["StdWrkShift"] = drAttd["LeaveTyp"].ToString();
+                }
+            }
+            daAttdData.Update(dsAttdData, "AttdData");
+        }
 
     }
 

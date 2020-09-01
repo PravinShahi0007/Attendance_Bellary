@@ -142,6 +142,10 @@
       <HintPath>packages\MQTTnet.2.6.0\lib\net452\MQTTnet.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Quartz, Version=2.6.1.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>packages\Quartz.2.6.1\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
@@ -156,6 +160,11 @@
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization">
       <Private>True</Private>
@@ -199,6 +208,24 @@
     <Compile Include="Forms\frmAutoMailSubScription.designer.cs">
       <DependentUpon>frmAutoMailSubScription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmBulkCostCodePlannedManPower.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmBulkCostCodePlannedManPower.designer.cs">
+      <DependentUpon>frmBulkCostCodePlannedManPower.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmBulkCostCodeSanManPower.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmBulkCostCodeSanManPower.designer.cs">
+      <DependentUpon>frmBulkCostCodeSanManPower.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmBulkLeaveUpload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmBulkLeaveUpload.designer.cs">
+      <DependentUpon>frmBulkLeaveUpload.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmBulkWOChange.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -216,6 +243,30 @@
     </Compile>
     <Compile Include="Forms\frmHalfDayCheck.designer.cs">
       <DependentUpon>frmHalfDayCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastConfigKeys.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastConfigKeys.designer.cs">
+      <DependentUpon>frmMastConfigKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCodePlannedManPower.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastCostCodePlannedManPower.designer.cs">
+      <DependentUpon>frmMastCostCodePlannedManPower.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpBlockPunching.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpBlockPunching.designer.cs">
+      <DependentUpon>frmMastEmpBlockPunching.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpBulkChange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMastEmpBulkChange.designer.cs">
+      <DependentUpon>frmMastEmpBulkChange.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmMastHolidayOpt.cs">
       <SubType>Form</SubType>
@@ -581,6 +632,15 @@
     <EmbeddedResource Include="Forms\frmAutoMailSubScription.resx">
       <DependentUpon>frmAutoMailSubScription.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmBulkCostCodePlannedManPower.resx">
+      <DependentUpon>frmBulkCostCodePlannedManPower.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmBulkCostCodeSanManPower.resx">
+      <DependentUpon>frmBulkCostCodeSanManPower.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmBulkLeaveUpload.resx">
+      <DependentUpon>frmBulkLeaveUpload.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmBulkWOChange.resx">
       <DependentUpon>frmBulkWOChange.cs</DependentUpon>
     </EmbeddedResource>
@@ -589,6 +649,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmHalfDayCheck.resx">
       <DependentUpon>frmHalfDayCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastConfigKeys.resx">
+      <DependentUpon>frmMastConfigKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastCostCodePlannedManPower.resx">
+      <DependentUpon>frmMastCostCodePlannedManPower.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastEmpBlockPunching.resx">
+      <DependentUpon>frmMastEmpBlockPunching.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMastEmpBulkChange.resx">
+      <DependentUpon>frmMastEmpBulkChange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmMastHolidayOpt.resx">
       <DependentUpon>frmMastHolidayOpt.cs</DependentUpon>

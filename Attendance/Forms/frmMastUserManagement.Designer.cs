@@ -83,7 +83,7 @@
             this.gv_avbl = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.SEL = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
-            this.Location = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLocation = new DevExpress.XtraGrid.Columns.GridColumn();
             this.MachineIP = new DevExpress.XtraGrid.Columns.GridColumn();
             this.MachineNo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Remarks = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -848,7 +848,7 @@
             // 
             this.gv_avbl.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.SEL,
-            this.Location,
+            this.colLocation,
             this.MachineIP,
             this.MachineNo,
             this.Remarks,
@@ -916,25 +916,25 @@
             this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
             this.repositoryItemCheckEdit1.ValueGrayed = false;
             // 
-            // Location
+            // colLocation
             // 
-            this.Location.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Location.AppearanceHeader.Options.UseFont = true;
-            this.Location.AppearanceHeader.Options.UseTextOptions = true;
-            this.Location.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.Location.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.Location.Caption = "Location";
-            this.Location.FieldName = "MachineDesc";
-            this.Location.Name = "Location";
-            this.Location.OptionsColumn.AllowEdit = false;
-            this.Location.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
-            this.Location.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.False;
-            this.Location.OptionsColumn.AllowMove = false;
-            this.Location.OptionsColumn.FixedWidth = true;
-            this.Location.OptionsColumn.ReadOnly = true;
-            this.Location.Visible = true;
-            this.Location.VisibleIndex = 1;
-            this.Location.Width = 63;
+            this.colLocation.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colLocation.AppearanceHeader.Options.UseFont = true;
+            this.colLocation.AppearanceHeader.Options.UseTextOptions = true;
+            this.colLocation.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.colLocation.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.colLocation.Caption = "Location";
+            this.colLocation.FieldName = "MachineDesc";
+            this.colLocation.Name = "colLocation";
+            this.colLocation.OptionsColumn.AllowEdit = false;
+            this.colLocation.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
+            this.colLocation.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.False;
+            this.colLocation.OptionsColumn.AllowMove = false;
+            this.colLocation.OptionsColumn.FixedWidth = true;
+            this.colLocation.OptionsColumn.ReadOnly = true;
+            this.colLocation.Visible = true;
+            this.colLocation.VisibleIndex = 1;
+            this.colLocation.Width = 63;
             // 
             // MachineIP
             // 
@@ -1775,7 +1775,7 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gv_avbl;
         private DevExpress.XtraGrid.Columns.GridColumn SEL;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
-        private DevExpress.XtraGrid.Columns.GridColumn Location;
+        private DevExpress.XtraGrid.Columns.GridColumn colLocation;
         private DevExpress.XtraGrid.Columns.GridColumn MachineIP;
         private DevExpress.XtraGrid.Columns.GridColumn MachineNo;
         private DevExpress.XtraGrid.Columns.GridColumn AutoClear;

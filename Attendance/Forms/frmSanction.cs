@@ -695,12 +695,12 @@ namespace Attendance.Forms
                 colDate = gv_Attd.Columns["ConsIn"];
                 colDate.DisplayFormat.Format = new CultureInfo("en");
                 colDate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
-                colDate.DisplayFormat.FormatString = "dd/MM/yy HH:mm";
+                colDate.DisplayFormat.FormatString = "dd/MM/yy HH:mm:ss";
                         
                 colDate = gv_Attd.Columns["ConsOut"];
                 colDate.DisplayFormat.Format = new CultureInfo("en");
                 colDate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
-                colDate.DisplayFormat.FormatString = "dd/MM/yy HH:mm";
+                colDate.DisplayFormat.FormatString = "dd/MM/yy HH:mm:ss";
 
                 foreach (GridColumn gc in gv_Attd.Columns)
                 {

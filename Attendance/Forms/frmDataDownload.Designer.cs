@@ -34,7 +34,7 @@
             this.gv_avbl = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.SEL = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
-            this.Location = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLocation = new DevExpress.XtraGrid.Columns.GridColumn();
             this.MachineIP = new DevExpress.XtraGrid.Columns.GridColumn();
             this.MachineNo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Records = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -43,6 +43,7 @@
             this.Remarks = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Mess = new DevExpress.XtraGrid.Columns.GridColumn();
             this.grpButtons = new System.Windows.Forms.GroupBox();
+            this.btnGetRegCount = new DevExpress.XtraEditors.SimpleButton();
             this.btnClearMach = new DevExpress.XtraEditors.SimpleButton();
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             this.btnUnockMach = new DevExpress.XtraEditors.SimpleButton();
@@ -70,7 +71,7 @@
             this.tblp.RowCount = 2;
             this.tblp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 69F));
             this.tblp.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblp.Size = new System.Drawing.Size(951, 576);
+            this.tblp.Size = new System.Drawing.Size(1108, 576);
             this.tblp.TabIndex = 0;
             // 
             // groupBox2
@@ -79,7 +80,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 72);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(945, 501);
+            this.groupBox2.Size = new System.Drawing.Size(1102, 501);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Available Machine";
@@ -92,7 +93,7 @@
             this.grpGrid.Name = "grpGrid";
             this.grpGrid.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemCheckEdit1});
-            this.grpGrid.Size = new System.Drawing.Size(939, 481);
+            this.grpGrid.Size = new System.Drawing.Size(1096, 481);
             this.grpGrid.TabIndex = 3;
             this.grpGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gv_avbl});
@@ -101,7 +102,7 @@
             // 
             this.gv_avbl.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.SEL,
-            this.Location,
+            this.colLocation,
             this.MachineIP,
             this.MachineNo,
             this.Records,
@@ -167,18 +168,18 @@
             this.repositoryItemCheckEdit1.Name = "repositoryItemCheckEdit1";
             this.repositoryItemCheckEdit1.ValueGrayed = false;
             // 
-            // Location
+            // colLocation
             // 
-            this.Location.Caption = "Location";
-            this.Location.FieldName = "MachineDesc";
-            this.Location.Name = "Location";
-            this.Location.OptionsColumn.AllowEdit = false;
-            this.Location.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
-            this.Location.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.False;
-            this.Location.OptionsColumn.AllowMove = false;
-            this.Location.OptionsColumn.ReadOnly = true;
-            this.Location.Visible = true;
-            this.Location.VisibleIndex = 1;
+            this.colLocation.Caption = "Location";
+            this.colLocation.FieldName = "MachineDesc";
+            this.colLocation.Name = "colLocation";
+            this.colLocation.OptionsColumn.AllowEdit = false;
+            this.colLocation.OptionsColumn.AllowGroup = DevExpress.Utils.DefaultBoolean.False;
+            this.colLocation.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.False;
+            this.colLocation.OptionsColumn.AllowMove = false;
+            this.colLocation.OptionsColumn.ReadOnly = true;
+            this.colLocation.Visible = true;
+            this.colLocation.VisibleIndex = 1;
             // 
             // MachineIP
             // 
@@ -273,6 +274,7 @@
             // 
             // grpButtons
             // 
+            this.grpButtons.Controls.Add(this.btnGetRegCount);
             this.grpButtons.Controls.Add(this.btnClearMach);
             this.grpButtons.Controls.Add(this.btnExport);
             this.grpButtons.Controls.Add(this.btnUnockMach);
@@ -283,9 +285,20 @@
             this.grpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpButtons.Location = new System.Drawing.Point(3, 3);
             this.grpButtons.Name = "grpButtons";
-            this.grpButtons.Size = new System.Drawing.Size(945, 63);
+            this.grpButtons.Size = new System.Drawing.Size(1102, 63);
             this.grpButtons.TabIndex = 4;
             this.grpButtons.TabStop = false;
+            // 
+            // btnGetRegCount
+            // 
+            this.btnGetRegCount.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGetRegCount.Appearance.Options.UseFont = true;
+            this.btnGetRegCount.Location = new System.Drawing.Point(768, 23);
+            this.btnGetRegCount.Name = "btnGetRegCount";
+            this.btnGetRegCount.Size = new System.Drawing.Size(120, 27);
+            this.btnGetRegCount.TabIndex = 9;
+            this.btnGetRegCount.Text = "&Get Reg. Count";
+            this.btnGetRegCount.Click += new System.EventHandler(this.btnGetRegCount_Click);
             // 
             // btnClearMach
             // 
@@ -302,7 +315,7 @@
             // 
             this.btnExport.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExport.Appearance.Options.UseFont = true;
-            this.btnExport.Location = new System.Drawing.Point(816, 23);
+            this.btnExport.Location = new System.Drawing.Point(973, 23);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(120, 27);
             this.btnExport.TabIndex = 6;
@@ -368,7 +381,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(951, 576);
+            this.ClientSize = new System.Drawing.Size(1108, 576);
             this.Controls.Add(this.tblp);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "frmDataDownload";
@@ -392,7 +405,7 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gv_avbl;
         private DevExpress.XtraGrid.Columns.GridColumn SEL;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
-        private DevExpress.XtraGrid.Columns.GridColumn Location;
+        private DevExpress.XtraGrid.Columns.GridColumn colLocation;
         private DevExpress.XtraGrid.Columns.GridColumn MachineIP;
         private DevExpress.XtraGrid.Columns.GridColumn MachineNo;
         private DevExpress.XtraGrid.Columns.GridColumn Records;
@@ -408,5 +421,6 @@
         private DevExpress.XtraEditors.SimpleButton btnUnockMach;
         private DevExpress.XtraEditors.SimpleButton btnExport;
         private DevExpress.XtraEditors.SimpleButton btnClearMach;
+        private DevExpress.XtraEditors.SimpleButton btnGetRegCount;
     }
 }

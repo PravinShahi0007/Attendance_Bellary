@@ -388,11 +388,82 @@ namespace Attendance.Classes
                     err += "Error while store to db : " + t.EmpUnqID + " : " + dberr + Environment.NewLine;
                 }
 
+                string attprocess = AttdPunchSchduleProcess(t);
+                if (!string.IsNullOrEmpty(attprocess))
+                {
+                    write_err += attprocess;
+                }
+
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(fullpath, true))
                 {
                     file.WriteLine(t.ToString());
                 }
             }
+
+            string outerr1 = string.Empty;
+            //new function to insert int RESTLOG table if RestPost and RestApi configured in machine
+            DataSet ds = Utils.Helper.GetData("Select RestPost,RestAPI from ReaderConfig where MachineIP ='" + this._ip + "'", Utils.Helper.constr, out outerr1);
+            if (string.IsNullOrEmpty(outerr1))
+            {
+                bool hasrows = ds.Tables.Cast<DataTable>().Any(table => table.Rows.Count != 0);
+                if (hasrows)
+                {
+                    DataRow dr = ds.Tables[0].Rows[0];
+
+                    bool RestPost = Convert.ToBoolean((dr["RestPost"] == DBNull.Value) ? "FALSE" : dr["RestPost"]);
+                    string RestAPI = dr["RestAPI"].ToString().Trim();
+                    string Basesql = string.Empty;
+                    if (RestPost && !string.IsNullOrEmpty(RestAPI))
+                    {
+
+                        using (SqlConnection cn = new SqlConnection(Utils.Helper.constr))
+                        {
+
+                            try
+                            {
+                                cn.Open();
+                                using (SqlCommand cmd = new SqlCommand())
+                                {
+
+                                    foreach (AttdLog t in AttdLogRec)
+                                    {
+                                        Basesql = "Insert into RESTLog (PunchDate,EmpUnqID,IOFLG,MachineIP,LunchFlg,tYear,tYearMt,t1Date,AddDt,AddID,PostedFlg,PostUrl) "
+                                           + " values('" + t.PunchDate.ToString("yyyy-MM-dd HH:mm:ss") + "','" + t.EmpUnqID + "','" + t.IOFLG + "','" + t.MachineIP + "'" +
+                                            " ,'" + t.LunchFlg + "','" + t.tYear.ToString() + "','" + t.tYearMt.ToString() + "','" + t.t1Date.ToString("yyyy-MM-dd") + "'" +
+                                            " ,GetDate(),'Server',0,'" + RestAPI + "')";
+                                        try
+                                        {
+                                            cmd.Connection = cn;
+                                            cmd.CommandText = Basesql;
+                                            cmd.CommandType = CommandType.Text;
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            using (System.IO.StreamWriter file = new System.IO.StreamWriter(fullpath, true))
+                                            {
+                                                file.WriteLine(ex.Message.ToString());
+                                            }
+                                        }
+
+                                    }//end for each
+
+                                }//command end
+                            }
+                            catch (Exception ex)
+                            {
+                                using (System.IO.StreamWriter file = new System.IO.StreamWriter(fullpath, true))
+                                {
+                                    file.WriteLine(ex.Message.ToString());
+                                }
+                            }
+
+                        }//connection end
+
+                    } //if rest check
+
+                }//if getdata 
+            }//if getdata err
 
             if (string.IsNullOrEmpty(write_err))
             {
@@ -406,6 +477,50 @@ namespace Attendance.Classes
 
             
         }
+
+
+        public string AttdPunchSchduleProcess(AttdLog t)
+        {
+            string err = string.Empty;
+
+            using (SqlConnection cn = new SqlConnection(Utils.Helper.constr))
+            {
+                try
+                {
+                    cn.Open();
+
+                    string sql = string.Empty;
+                    if (t.LunchFlg)
+                    {
+                        sql = "Insert into AttdWorker (EmpUnqID,FromDt,ToDt,Workerid,DoneFlg,PushFlg,AddDt,AddId,ProcessType) values" +
+                        " ('" + t.EmpUnqID + "','" + t.t1Date.AddDays(-1).ToString("yyyy-MM-dd") + "' " +
+                        " ,'" + t.t1Date.ToString("yyyy-MM-dd") + "','SERVER',0,0,GetDate(),'SERVER','MESS')";
+                    }
+                    else
+                    {
+                        sql = "Insert into AttdWorker (EmpUnqID,FromDt,ToDt,Workerid,DoneFlg,PushFlg,AddDt,AddId,ProcessType) values" +
+                        " ('" + t.EmpUnqID + "','" + t.t1Date.AddDays(-1).ToString("yyyy-MM-dd") + "' " +
+                        " ,'" + t.t1Date.ToString("yyyy-MM-dd") + "','SERVER',0,0,GetDate(),'SERVER','ATTD')";
+                    }
+
+
+                    using (SqlCommand cmd = new SqlCommand(sql, cn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    err += "Error While storage in AttdWorker ->" + ex.Message.ToString();
+                }
+            }
+
+            return err;
+
+        }
+
+
+
 
         /// <summary>
         /// store attendance logs in db
@@ -736,7 +851,7 @@ namespace Attendance.Classes
                             
                         }
 
-                        this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
+                        //this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
                     }
                 }
 
@@ -823,7 +938,7 @@ namespace Attendance.Classes
                         }
                     }
                     
-                    this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
+                    //this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
                 }
 
             }
@@ -944,7 +1059,7 @@ namespace Attendance.Classes
                                 }
 
                                 //make sure to access method rfid+face
-                                this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
+                               // this.CZKEM1.SetUserInfoEx(_machineno, Convert.ToInt32(emp.UserID), 146, 0);
                                 
                               
                             }
@@ -2428,6 +2543,228 @@ namespace Attendance.Classes
             this.CZKEM1.EnableDevice(_machineno, true);
 
         }
+
+        public bool GetSDKVersion(out string version, out string err)
+        {
+            err = string.Empty;
+            version = string.Empty;
+            bool ret = false;
+            if (!this._connected)
+            {
+                err = "Machine is not connected";
+                return ret;
+            }
+
+            ret = this.CZKEM1.GetSDKVersion(ref version);
+            return ret;
+        }
+
+        public bool GetSerialNumber(out string strSerialNo, out string err)
+        {
+            err = string.Empty;
+            strSerialNo = string.Empty;
+            bool ret = false;
+            if (!this._connected)
+            {
+                err = "Machine is not connected";
+                return ret;
+            }
+
+            ret = this.CZKEM1.GetSerialNumber(this.CZKEM1.MachineNumber, out strSerialNo);
+            return ret;
+        }
+
+        public bool GetFirmwareVersion(out string strFirmwarever, out string err)
+        {
+            err = string.Empty;
+            strFirmwarever = string.Empty;
+            bool ret = false;
+            if (!this._connected)
+            {
+                err = "Machine is not connected";
+                return ret;
+            }
+
+            ret = this.CZKEM1.GetFirmwareVersion(this.CZKEM1.MachineNumber, ref strFirmwarever);
+            return ret;
+        }
+
+        public bool GetDeviceMAC(out string strmacadd, out string err)
+        {
+            err = string.Empty;
+            strmacadd = string.Empty;
+            bool ret = false;
+            if (!this._connected)
+            {
+                err = "Machine is not connected";
+                return ret;
+            }
+
+            ret = this.CZKEM1.GetDeviceMAC(this.CZKEM1.MachineNumber, ref strmacadd);
+            return ret;
+        }
+
+        public bool GetPlatform(out string strplatform, out string err)
+        {
+            err = string.Empty;
+            strplatform = string.Empty;
+            bool ret = false;
+            if (!this._connected)
+            {
+                err = "Machine is not connected";
+                return ret;
+            }
+
+            ret = this.CZKEM1.GetPlatform(this.CZKEM1.MachineNumber, ref strplatform);
+            return ret;
+        }
+
+        public bool SaveDeviceData(out string err)
+        {
+
+            bool ret = false;
+            if (!this._connected)
+            {
+                err = "Machine is not connected";
+                return ret;
+            }
+
+
+            string sdkversion = "";
+            string serialno = "";
+            string firmwarever = "";
+            string platform = "";
+            string macadd = "";
+
+            int UserCapacity = 0;
+            int RegisteredUsers = 0;
+            int FaceCapacity = 0;
+            int RegisteredFace = 0;
+            int FingerCapacity = 0;
+            int RegisteredFinger = 0;
+
+            this.GetSDKVersion(out sdkversion, out err);
+            this.GetSerialNumber(out serialno, out err);
+            this.GetFirmwareVersion(out firmwarever, out err);
+            this.GetPlatform(out platform, out err);
+            this.GetDeviceMAC(out macadd, out err);
+            this.Get_StatusInfo_Users(out RegisteredUsers, out UserCapacity, out err);
+            this.Get_StatusInfo_Face(out RegisteredFace, out FaceCapacity, out err);
+            this.Get_StatusInfo_Finger(out RegisteredFinger, out FingerCapacity, out err);
+
+            using (SqlConnection cn = new SqlConnection(Utils.Helper.constr))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    try
+                    {
+                        cn.Open();
+                        string sql = "Update ReaderConfig set FirmwareVer ='" + firmwarever + "'," +
+                            " SdkVer ='" + sdkversion + "', SerialNo ='" + serialno + "',Platform ='" + platform + "'," +
+                            " MacAdd ='" + macadd + "'," +
+                            " UserCapacity = '" + UserCapacity.ToString() + "'," +
+                            " RegisteredUsers ='" + RegisteredUsers.ToString() + "'," +
+                            " FaceCapacity='" + FaceCapacity.ToString() + "'," +
+                            " RegisteredFace ='" + RegisteredFace.ToString() + "'," +
+                            " FingerCapacity='" + FingerCapacity.ToString() + "'," +
+                            " RegisteredFinger='" + RegisteredFinger.ToString() + "'," +
+                            " DeviceInfoUpdDt ='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'" +
+                            " Where MachineIP ='" + this._ip + "'";
+
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = cn;
+                        cmd.CommandText = sql;
+                        cmd.ExecuteNonQuery();
+                        err = "";
+                        return true;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        err = ex.Message.ToString();
+                        return false;
+                    }
+                }
+            }
+
+        }
+        
+        public void Get_StatusInfo_Users(out int usercount, out int usercapacity, out string err)
+        {
+            err = string.Empty;
+            usercount = 0;
+            usercapacity = 0;
+
+            if (!_connected)
+            {
+                err = "Machine not connected..";
+                return;
+            }
+            bool istft = this.CZKEM1.IsTFTMachine(_machineno);
+            this.CZKEM1.GetDeviceStatus(_machineno, 2, ref usercount);
+            this.CZKEM1.GetDeviceStatus(_machineno, 8, ref usercapacity);
+        }
+
+        public void Get_StatusInfo_Face(out int facecount, out int facecapacity, out string err)
+        {
+            err = string.Empty;
+            facecount = 0;
+            facecapacity = 0;
+
+            if (!_connected)
+            {
+                err = "Machine not connected..";
+                return;
+            }
+            bool istft = this.CZKEM1.IsTFTMachine(_machineno);
+
+            if (istft)
+            {
+                this.CZKEM1.GetDeviceStatus(_machineno, 21, ref facecount);
+                this.CZKEM1.GetDeviceStatus(_machineno, 22, ref facecapacity);
+            }
+
+        }
+
+        public void Get_StatusInfo_Finger(out int fingercount, out int fingercapacity, out string err)
+        {
+            err = string.Empty;
+            fingercount = 0;
+            fingercapacity = 0;
+
+            if (!_connected)
+            {
+                err = "Machine not connected..";
+                return;
+            }
+            bool istft = this.CZKEM1.IsTFTMachine(_machineno);
+
+            if (istft)
+            {
+                this.CZKEM1.GetDeviceStatus(_machineno, 3, ref fingercount);
+                this.CZKEM1.GetDeviceStatus(_machineno, 7, ref fingercapacity);
+            }
+
+        }
+
+        public bool SetDuplicatePunchDuration(int nosofminutes)
+        {
+            bool result = false;
+            if (!_messflg)
+            {
+                //// get duplicate punch time from machine
+                int duptime = 0;
+                result = this.CZKEM1.GetDeviceInfo(_machineno, 8, ref duptime);
+
+                if (result)
+                {
+                    result = this.CZKEM1.SetDeviceInfo(_machineno, 8, 3);
+                }
+            }
+            return result;
+        }
+
+        
 
     }
 }

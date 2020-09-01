@@ -72,6 +72,11 @@ namespace Attendance.Forms
                 err = err + "Please Select Atleast One Features From (RFID/Face/Finger)" + Environment.NewLine;
 
             }
+
+            if(chkRestPost.CheckState == CheckState.Checked && string.IsNullOrEmpty(txtRestAPI.Text.Trim().ToString()))
+            {
+                err = err + "Please Provice REST API URL" + Environment.NewLine;
+            }
                
             //check for single master machine..
             if (chkMaster.CheckState == CheckState.Checked)
@@ -109,6 +114,8 @@ namespace Attendance.Forms
                 chkMessUse.CheckState = CheckState.Unchecked;
                 chkActive.CheckState = CheckState.Checked;
                 chkAuto.CheckState = CheckState.Unchecked;
+                chkRestPost.CheckState = CheckState.Unchecked;
+                txtRestAPI.Text = "";
             }
 
             int t = 0;
@@ -166,6 +173,8 @@ namespace Attendance.Forms
             chkLunchInOut.CheckState = CheckState.Unchecked;
             chkMessUse.CheckState = CheckState.Unchecked;
 
+            chkRestPost.CheckState = CheckState.Unchecked;
+            txtRestAPI.Text = "";
 
 
             oldCode = "";
@@ -284,17 +293,18 @@ namespace Attendance.Forms
                             txtINOut.Text = "IN";
                             break;
                     }
-                    chkActive.CheckState = (Convert.ToBoolean(dr["Active"])) ? CheckState.Checked : CheckState.Unchecked;
-                    chkMaster.CheckState = (Convert.ToBoolean(dr["Master"])) ? CheckState.Checked : CheckState.Unchecked;
-                    chkRFID.CheckState = (Convert.ToBoolean(dr["RFID"])) ? CheckState.Checked : CheckState.Unchecked;
-                    chkFace.CheckState = (Convert.ToBoolean(dr["FACE"])) ? CheckState.Checked : CheckState.Unchecked;
-                    chkFinger.CheckState = (Convert.ToBoolean(dr["Finger"])) ? CheckState.Checked : CheckState.Unchecked;
-                    chkMessUse.CheckState = (Convert.ToBoolean(dr["CanteenFlg"])) ? CheckState.Checked : CheckState.Unchecked;
-                    chkAuto.CheckState = (Convert.ToBoolean(dr["AutoClear"])) ? CheckState.Checked : CheckState.Unchecked;
-                    chkGateInOut.CheckState = (Convert.ToBoolean(dr["GateInOut"])) ? CheckState.Checked : CheckState.Unchecked;
-                    chkLunchInOut.CheckState = (Convert.ToBoolean(dr["LunchInOut"])) ? CheckState.Checked : CheckState.Unchecked;
-                    
-                    
+                    chkActive.CheckState = Convert.ToBoolean((dr["Active"] == DBNull.Value) ? "FALSE" : dr["Active"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkMaster.CheckState = Convert.ToBoolean((dr["Master"] == DBNull.Value) ? "FALSE" : dr["Master"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkRFID.CheckState = Convert.ToBoolean((dr["RFID"] == DBNull.Value) ? "FALSE" : dr["RFID"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkFace.CheckState = Convert.ToBoolean((dr["FACE"] == DBNull.Value) ? "FALSE" : dr["FACE"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkFinger.CheckState = Convert.ToBoolean((dr["FINGER"] == DBNull.Value) ? "FALSE" : dr["FINGER"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkMessUse.CheckState = Convert.ToBoolean((dr["CanteenFlg"] == DBNull.Value) ? "FALSE" : dr["CanteenFlg"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkAuto.CheckState = Convert.ToBoolean((dr["AutoClear"] == DBNull.Value) ? "FALSE" : dr["AutoClear"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkGateInOut.CheckState = Convert.ToBoolean((dr["GateInOut"] == DBNull.Value) ? "FALSE" : dr["GateInOut"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkLunchInOut.CheckState = Convert.ToBoolean((dr["LunchInOut"] == DBNull.Value) ? "FALSE" : dr["LunchInOut"]) ? CheckState.Checked : CheckState.Unchecked;
+                    chkRestPost.CheckState = Convert.ToBoolean((dr["RestPost"] == DBNull.Value) ? "FALSE" : dr["RestPost"]) ? CheckState.Checked : CheckState.Unchecked;
+                    txtRestAPI.Text = dr["RestAPI"].ToString().Trim();
+
                     mode = "OLD";
                     txtCompCode_Validated(sender,e);
                     oldCode = dr["MachineIP"].ToString();
@@ -400,15 +410,15 @@ namespace Attendance.Forms
                             "(CompCode,MachineIP,MachineDesc,Location,MachineNo,IOFLG," +
                             " AutoClear,Active,Master,RFID,Finger,FACE," +
                             " CanteenFlg,LunchInOut,GateInOut," +
-                            " AddDt,AddID) Values ('{0}','{1}','{2}','{3}','{4}','{5}'," +
+                            " AddDt,AddID,RestPost,RestAPI) Values ('{0}','{1}','{2}','{3}','{4}','{5}'," +
                             " '{6}','{7}','{8}','{9}','{10}','{11}'," +
-                            " '{12}','{13}','{14}',GetDate(),'{15}')";
+                            " '{12}','{13}','{14}',GetDate(),'{15}','{16}','{17}')";
 
                         sql = string.Format(sql, txtCompCode.Text.Trim().ToString(), txtIPAdd.Text.Trim().ToString(),
                             txtDescription.Text.Trim().ToString(),txtLocation.Text.Trim().ToString(),txtMachineNo.Text.Trim().ToString(),txtINOut.Text.ToString().Substring(0,1),
                             ((chkAuto.Checked)?"1":"0"),((chkActive.Checked)?"1":"0"),((chkMaster.Checked)?"1":"0"),((chkRFID.Checked)?"1":"0"),((chkFinger.Checked)?"1":"0"),((chkFace.Checked)?"1":"0"),
                             ((chkMessUse.Checked)?"1":"0"),((chkLunchInOut.Checked)?"1":"0"),((chkGateInOut.Checked)?"1":"0"),
-                            Utils.User.GUserID);
+                            Utils.User.GUserID, ((chkRestPost.Checked) ? "1" : "0"),txtRestAPI.Text.Trim().ToString());
 
                         cmd.CommandText = sql;
                         cmd.ExecuteNonQuery();
@@ -446,15 +456,20 @@ namespace Attendance.Forms
                             + " Location='{1}',IOFLG ='{2}',MachineNo = '{3}',"
                             + " RFID ='{4}',FACE='{5}',Finger='{6}',"
                             + " GateInOut = '{7}',LunchInOut = '{8}', CanteenFlg = '{9}'," 
-                            + " Active = '{10}', Master = '{11}', AutoClear = '{12}',"
-                            + " UpdDt = GetDate(), UpdID = '{13}' Where CompCode = '{14}' and MachineIP = '{15}' ";
+                            + " Active = '{10}', Master = '{11}', AutoClear = '{12}'," 
+                            + " UpdDt = GetDate(), UpdID = '{13}', " 
+                            + " RestPost = '{14}', RestAPI = '{15}' " 
+                            + " Where CompCode = '{16}' and MachineIP = '{17}' ";
 
                         sql = string.Format(sql, txtDescription.Text.Trim(),
                              txtLocation.Text.Trim().ToString(),txtINOut.Text.ToString().Substring(0,1),txtMachineNo.Text.Trim(),
                              ((chkRFID.Checked)?"1":"0"), ((chkFace.Checked)?"1":"0"),((chkFinger.Checked)?"1":"0"),
                              ((chkGateInOut.Checked)?"1":"0"),((chkLunchInOut.Checked)?"1":"0"),((chkMessUse.Checked)?"1":"0"),
                              ((chkActive.Checked)?"1":"0"),((chkMaster.Checked)?"1":"0"),((chkAuto.Checked)?"1":"0"),
-                             Utils.User.GUserID, txtCompCode.Text.Trim().ToString(), txtIPAdd.Text.Trim().ToString()
+                             Utils.User.GUserID,
+                             ((chkRestPost.Checked)?"1":"0"),
+                             txtRestAPI.Text.Trim().ToString(),
+                             txtCompCode.Text.Trim().ToString(), txtIPAdd.Text.Trim().ToString()
                            );
 
                         cmd.CommandText = sql;
@@ -575,7 +590,12 @@ namespace Attendance.Forms
                 txtIPAdd_Validated(o, e);
             }
 
-            
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
         }
 
 

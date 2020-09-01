@@ -11,7 +11,20 @@ using System.Net.Mail;
 
 namespace Attendance.Classes
 {
-    
+    public class AttdLeavePost
+    {
+        public int AppID { get; set; }
+        public string EmpUnqID { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public string LeaveTyp { get; set; }
+        public bool HalfDay { get; set; }
+        public bool PostedFlg { get; set; }
+        public string AttdUser { get; set; }
+        public string Remarks { get; set; }
+        public string ERROR { get; set; }
+        public string Location { get; set; }
+    }
     
     class Globals
     {

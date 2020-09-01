@@ -82,12 +82,13 @@ namespace Attendance.Forms
                                 " LateHalfDayFlg = '" + ((chkLateHalfDayFlg.Checked) ? "1" : "0") + "'," +
                                 " EarlyGoingHalfDayFlg ='" + ((chkEarlyGoingHalfDayFlg.Checked) ? "1" : "0") + "'," +
                                 " EarlyGoingHalfDaySec ='" + txtEarlyGoingHalfDaySec.Value.ToString() + "'," +
-                                " LateHalfDaySec ='" + txtLateHalfDaySec.Value.ToString() + "'";
+                                " LateHalfDaySec ='" + txtLateHalfDaySec.Value.ToString() + "'," +
+                                " GlobalGradeExclude ='" + txtGlobalExclude.Value.ToString() + "'";
 
                         }else{
 
                             sql = "Insert into MastBCFlg (SanDayLimit,LateComeSec,EarlyComeSec,EarlyGoingSec,GracePeriodSec" +
-                            "  GraceHalfDayFlg, LateHalfDayFlg,EarlyGoingHalfDayFlg,EarlyGoingHalfDaySec,LateHalfDaySec ) values (" +
+                            "  GraceHalfDayFlg, LateHalfDayFlg,EarlyGoingHalfDayFlg,EarlyGoingHalfDaySec,LateHalfDaySec,GlobalGradeExclude ) values (" +
                                 "'" + txtSanDayLimit.Value.ToString() + "'," +
                                 "'" + txtLateComeSec.Value.ToString() + "'," +
                                 "'" + txtEarlyComeSec.Value.ToString() + "'," +
@@ -97,7 +98,8 @@ namespace Attendance.Forms
                                 "'" + ((chkLateHalfDayFlg.Checked) ? "1" : "0") + "'," +
                                 "'" + ((chkEarlyGoingHalfDayFlg.Checked) ? "1" : "0") + "'," +
                                 "'" + txtEarlyGoingHalfDaySec.Value.ToString() + "'," +
-                                "'" + txtLateHalfDaySec.Value.ToString() + "')";
+                                "'" + txtLateHalfDaySec.Value.ToString() + "'," + 
+                                "'" + txtGlobalExclude.Value.ToString() + "')";
                         }
                         cmd.Connection = cn;
                         cmd.CommandText = sql;
@@ -234,7 +236,7 @@ namespace Attendance.Forms
                     chkEarlyGoingHalfDayFlg.Checked = Convert.ToBoolean(dr["EarlyGoingHalfDayFlg"]);
                     txtEarlyGoingHalfDaySec.Value = Convert.ToInt32(dr["EarlyGoingHalfDaySec"].ToString());
                     txtLateHalfDaySec.Value = Convert.ToInt32(dr["LateHalfDaySec"].ToString());
-
+                    txtGlobalExclude.Value = Convert.ToInt32(dr["GlobalGradeExclude"]);
                 }
             }
             else
@@ -244,7 +246,7 @@ namespace Attendance.Forms
                 txtEarlyComeSec.Value = 0;
                 txtEarlyGoingSec.Value = 0;
                 txtGracePeriodSec.Value = 0;
-                
+                txtGlobalExclude.Value = 0;
                 txtLateHalfDaySec.Value = 0;
                 txtEarlyGoingHalfDaySec.Value = 0;
 
@@ -266,7 +268,7 @@ namespace Attendance.Forms
                     txtReportSerExeURL.Text = dr["ReportSerExeURL"].ToString();
                     txtServerWorkerIP.Text = dr["ServerWorkerIP"].ToString();
                     txtUpdateChkPath.Text = dr["UpdateChkPath"].ToString();
-                    
+                    txtAttdWebApiHost.Text = dr["AttdWebApiHost"].ToString();
                     GNetWorkDomain = dr["NetWorkDomain"].ToString();
                     GNetWorkUser = dr["NetWorkUser"].ToString();
                     txtAutoProcessWrkGrp.Text = dr["AutoProcessWrkGrp"].ToString();
@@ -275,6 +277,7 @@ namespace Attendance.Forms
                     {
                         chkAutoProcessFlg.Checked = Convert.ToBoolean(dr["AutoProcessFlg"]);
                         TimeSpan t = new TimeSpan();
+
                         TimeSpan.TryParse(dr["AutoProcessTime"].ToString(), out t);
                         txtAutoProccessTime.EditValue = t;
                     }
@@ -463,12 +466,14 @@ namespace Attendance.Forms
                             " AutoDelEmpExpireValFlg ='" + (chkAutoDelExpEmp.Checked?1:0) + "', AutoDelEmpExpireTime='" + txtAutoDelExpEmpTime.Time.ToString("HH:mm").ToString() + "'," +
                             " UpdateChkPath ='" + txtUpdateChkPath.Text.Trim() + "'," +
                             " JobNotificationFlg ='" + (chkJobNotification.Checked?1:0)+ "', " +
-                            " JobNotificationEmail ='" + txtJobNotificationEmail.Text.Trim().ToString() + "' " +
+                            " JobNotificationEmail ='" + txtJobNotificationEmail.Text.Trim().ToString() + "', " +
+                            " AttdWebApiHost ='" + txtAttdWebApiHost.Text.Trim().ToString() + "' " +
                             " where NetWorkDomain ='" + GNetWorkDomain + "' And NetworkUser ='"  + GNetWorkUser +  "'";
                         
                         cmd.Connection = cn;
                         cmd.CommandText = sql;
                         cmd.ExecuteNonQuery();
+                        bool x = Globals.GetGlobalVars();
                         MessageBox.Show("Record Updated...", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }

@@ -161,7 +161,7 @@ namespace Attendance.Forms
                     {
                         sql = "Insert into MastUser (UserID,UserName,Pass,Active,IsAdmin,AddDt,AddId) values (" +
                             " '" + txtUserID.Text.Trim() + "','" + txtPersonName.Text.Trim() + "','" + txtPassword.Text.Trim() + "'," +
-                            " '" + ((this.chkActive.Checked) ? "Y" : "N") + "', '" + " IsAdmin ='" + ((this.chkSuperUser.Checked) ? "1" :"0") + "',GetDate() ,'" + Utils.User.GUserID + "') ";
+                            " '" + ((this.chkActive.Checked) ? "Y" : "N") + "','" + ((this.chkSuperUser.Checked) ? "1" :"0") + "',GetDate() ,'" + Utils.User.GUserID + "') ";
                         
                         cmd = new SqlCommand(sql, cn);
                         cmd.ExecuteNonQuery();

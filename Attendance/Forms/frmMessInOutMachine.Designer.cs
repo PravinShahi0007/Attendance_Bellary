@@ -55,7 +55,7 @@
             this.LunchInTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.DinnerOutTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.DinnerInTime = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.Location = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLocation = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemCheckEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             this.grpUserRights = new System.Windows.Forms.GroupBox();
             this.btnClose = new System.Windows.Forms.Button();
@@ -335,7 +335,7 @@
             this.LunchInTime,
             this.DinnerOutTime,
             this.DinnerInTime,
-            this.Location});
+            this.colLocation});
             this.gv_avbl.GridControl = this.grd_avbl;
             this.gv_avbl.Name = "gv_avbl";
             this.gv_avbl.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -491,22 +491,22 @@
             this.DinnerInTime.VisibleIndex = 6;
             this.DinnerInTime.Width = 98;
             // 
-            // Location
+            // colLocation
             // 
-            this.Location.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Location.AppearanceHeader.Options.UseFont = true;
-            this.Location.Caption = "Location";
-            this.Location.FieldName = "Location";
-            this.Location.Name = "Location";
-            this.Location.OptionsColumn.AllowEdit = false;
-            this.Location.OptionsColumn.AllowMove = false;
-            this.Location.OptionsColumn.AllowShowHide = false;
-            this.Location.OptionsColumn.ReadOnly = true;
-            this.Location.OptionsFilter.AllowAutoFilter = false;
-            this.Location.OptionsFilter.AllowFilter = false;
-            this.Location.Visible = true;
-            this.Location.VisibleIndex = 7;
-            this.Location.Width = 113;
+            this.colLocation.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colLocation.AppearanceHeader.Options.UseFont = true;
+            this.colLocation.Caption = "Location";
+            this.colLocation.FieldName = "Location";
+            this.colLocation.Name = "colLocation";
+            this.colLocation.OptionsColumn.AllowEdit = false;
+            this.colLocation.OptionsColumn.AllowMove = false;
+            this.colLocation.OptionsColumn.AllowShowHide = false;
+            this.colLocation.OptionsColumn.ReadOnly = true;
+            this.colLocation.OptionsFilter.AllowAutoFilter = false;
+            this.colLocation.OptionsFilter.AllowFilter = false;
+            this.colLocation.Visible = true;
+            this.colLocation.VisibleIndex = 7;
+            this.colLocation.Width = 113;
             // 
             // repositoryItemCheckEdit1
             // 
@@ -652,7 +652,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn LunchInTime;
         private DevExpress.XtraGrid.Columns.GridColumn DinnerOutTime;
         private DevExpress.XtraGrid.Columns.GridColumn DinnerInTime;
-        private DevExpress.XtraGrid.Columns.GridColumn Location;
+        private DevExpress.XtraGrid.Columns.GridColumn colLocation;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit1;
     }
 }

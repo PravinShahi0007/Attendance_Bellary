@@ -1683,8 +1683,21 @@ namespace Attendance.Forms
 
                     if (!string.IsNullOrEmpty(cells.ToString()))
                     {
-                        txtEmpUnqID.Text = cells.Substring(0, 8).Trim();
+                        txtEmpUnqID.Text = cells.Trim();
                         txtEmpUnqID_Validated(sender, e);
+
+                        if (txtEmpUnqID.Text.Trim() == string.Empty || txtEmpName.Text.Trim() == string.Empty)
+                        {
+
+                            DialogResult dr = MessageBox.Show("warning! Employee not found,are you sure ?", "Question", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                            if (dr == System.Windows.Forms.DialogResult.No)
+                                continue;
+                            else if (dr == System.Windows.Forms.DialogResult.Cancel)
+                                break;
+
+                        }
+
                         btnAddEmp_Click(sender, e);
                     }
                 }
