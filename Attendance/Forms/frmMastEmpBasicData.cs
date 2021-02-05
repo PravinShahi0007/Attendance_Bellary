@@ -717,39 +717,39 @@ namespace Attendance.Forms
                         cmd.CommandText = sql;
                         cmd.ExecuteNonQuery();
 
-                        cmd.CommandText = "Delete from AttdData where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-                        cmd.CommandText = "Delete from MastEmpBio where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-                        cmd.CommandText = "Delete from LeaveEntry where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-                        cmd.CommandText = "Delete from MastEmpFamily  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-                        cmd.CommandText = "Delete from MastEmpExp  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-                        cmd.CommandText = "Delete from MastEmpEDU  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-                        cmd.CommandText = "Delete from MastEmpPPE  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-                        cmd.CommandText = "Delete from MastLeaveSchedule  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-
-                        cmd.CommandText = "Delete from MastShiftSchedule  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
-
-                        //cmd.CommandText = "Delete from ATTDLOG  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.CommandText = "Delete from AttdData where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
                         //cmd.ExecuteNonQuery();
 
-                        cmd.CommandText = "Delete from LeaveBal  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
-                        cmd.ExecuteNonQuery();
+                        //cmd.CommandText = "Delete from MastEmpBio where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
+
+                        //cmd.CommandText = "Delete from LeaveEntry where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
+
+                        //cmd.CommandText = "Delete from MastEmpFamily  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
+
+                        //cmd.CommandText = "Delete from MastEmpExp  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
+
+                        //cmd.CommandText = "Delete from MastEmpEDU  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
+
+                        //cmd.CommandText = "Delete from MastEmpPPE  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
+
+                        //cmd.CommandText = "Delete from MastLeaveSchedule  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
+
+
+                        //cmd.CommandText = "Delete from MastShiftSchedule  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
+
+                        ////cmd.CommandText = "Delete from ATTDLOG  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        ////cmd.ExecuteNonQuery();
+
+                        //cmd.CommandText = "Delete from LeaveBal  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
+                        //cmd.ExecuteNonQuery();
 
                         cmd.CommandText = "Delete from MastEmp  where EmpUnqID = '" + txtEmpUnqID.Text.Trim() + "'";
                         cmd.ExecuteNonQuery();
