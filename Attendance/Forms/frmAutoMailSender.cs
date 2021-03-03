@@ -33,6 +33,11 @@ namespace Attendance.Forms
 
         private void frmAutoMailSender_Load(object sender, EventArgs e)
         {
+
+            txtDtFrom.MaxDate = new DateTime(DateTime.Now.Year, 12, 31);
+            txtDtFrom.MinDate = new DateTime(DateTime.Now.Year - 1, 12, 1);
+            txtDtTo.MaxDate = new DateTime(DateTime.Now.Year, 12, 31);
+            txtDtTo.MinDate = new DateTime(DateTime.Now.Year - 1, 12, 1);
             btnReset_Click(sender,e);
             
         }
