@@ -407,7 +407,7 @@ namespace Attendance.Forms
         private void LoadGrid()
         {
             DataSet ds = new DataSet();
-            string sql = "select a.EmpUnqID,a.CostCode,a.ValidFrom,b.CostDesc " 
+            string sql = "select a.EmpUnqID,a.CostCode,a.ValidFrom,b.CostDesc,a.AddDt,a.AddID " 
             + " From  MastCostCodeEmp a, MastCostCode b " 
             + " where a.EmpUnqID = '" + ctrlEmp1.txtEmpUnqID.Text.Trim().ToString() + "' "
             + " and a.CostCode = b.CostCode ";
