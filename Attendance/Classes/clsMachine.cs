@@ -295,7 +295,8 @@ namespace Attendance.Classes
             string filepath = Utils.Helper.GetLogFilePath();
             string filenm = "AttdLog_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + "-[" + _ip.Replace(".","_") + "].txt";
             string fullpath = Path.Combine(filepath, filenm);
-                        
+            string write_err = string.Empty;
+            
             CZKEM1.EnableDevice(_machineno, false);//disable the device
             if (CZKEM1.ReadGeneralLogData(_machineno))//read all the attendance records to the memory
             {
@@ -355,27 +356,36 @@ namespace Attendance.Classes
             }
             else
             {
-                
+
                 this.CZKEM1.GetLastError(ref _LastErrCode);
 
                 if (_LastErrCode != 0)
                 {
-                    err =  "Reading data from terminal failed,ErrorCode: " +_LastErrCode.ToString();
+                    err = "Reading data from terminal failed,ErrorCode: " + _LastErrCode.ToString();
+                    write_err = "Reading data from terminal failed,ErrorCode: " + _LastErrCode.ToString();
                 }
                 else
                 {
                     err = "No Records Found...";
+                    write_err = "No Records Found...";
                 }
-                
             }
 
             this.CZKEM1.EnableDevice(_machineno, true);//enable the device
+
+            if (!string.IsNullOrEmpty(write_err))
+            {
+                this.CZKEM1.RestartDevice(_machineno);
+                return;
+            }
+
+            
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(fullpath, true))
             {
                 file.WriteLine("");
             }
 
-            string write_err = string.Empty;
+            
 
             //write text file and also store in db
             foreach (AttdLog t in AttdLogRec)
