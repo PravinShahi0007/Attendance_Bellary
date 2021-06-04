@@ -1208,7 +1208,7 @@ namespace Attendance.Classes
                             
                             MailAttachment m1 = new MailAttachment(results, attchnamePrefix + "Daily Performance Report.xls");
                             Email(dr["EmailTo"].ToString(), dr["EmailCopy"].ToString(), dr["BCCTo"].ToString(),
-                                "Daily Performance Report", substr2, Globals.G_DefaultMailID, "Attendance System", "", "", subscrid, m1);
+                                "Daily Performance Report", substr2, Globals.G_DefaultMailID, Globals.G_DefaultMailID, "", "", subscrid, m1);
                         }
                         else if(ReportType.ToUpper().Contains("ARRIVAL"))
                         {
@@ -1230,7 +1230,7 @@ namespace Attendance.Classes
                             results = rsExec.Render(format, deviceInfo, out extension, out mimeType, out encoding, out warnings, out streamIDs);
                             MailAttachment m1 = new MailAttachment(results, attchnamePrefix + "Daily Arrival Report.xls");
                             Email(dr["EmailTo"].ToString(), dr["EmailCopy"].ToString(), dr["BCCTo"].ToString(),
-                                "Daily Arrival Report ", substr2, Globals.G_DefaultMailID, "Attendance System", "", "", subscrid, m1);
+                                "Daily Arrival Report ", substr2, Globals.G_DefaultMailID, Globals.G_DefaultMailID, "", "", subscrid, m1);
                         }
 
                     }
@@ -1437,6 +1437,24 @@ namespace Attendance.Classes
                                 tMsg.MsgType = "Auto Process";
                                 tMsg.Message = tEmpUnqID + ": Error=>" + err;
                                 Scheduler.Publish(tMsg);
+                                using (SqlConnection cn = new SqlConnection(Utils.Helper.constr))
+                                {
+                                    try
+                                    {
+                                        cn.Open();
+                                        using (SqlCommand cmd = new SqlCommand())
+                                        {
+                                            cmd.Connection = cn;
+                                            string upsql = "Update AttdWorker set doneflg = 1 , pushflg = 1,workerid ='Error' where msgid = '" + MsgID + "'";
+                                            cmd.CommandText = upsql;
+                                            cmd.ExecuteNonQuery();
+                                        }
+                                    }
+                                    catch
+                                    {
+
+                                    }
+                                }
                             }
                             else
                             {
